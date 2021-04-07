@@ -10,6 +10,8 @@ var usersRouter = require('./routes/users');
 var network_planningRouter = require('./routes/network_planningRouter');
 
 const Network_Planner = require('./models/network_planner');
+const Airlines = require('./models/airlines');
+const Airports = require('./models/airports');
 
 const connect = mongoose.connect("mongodb://localhost:27017/ProjectDaedalusDB")
 connect.then((db) => {

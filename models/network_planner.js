@@ -39,7 +39,11 @@ var Network_PlannerSchema = new Schema({
     thursday_dep: String,
     friday_dep: String,
     saturday_dep: String,
-    sunday_dep: String
+    sunday_dep: String,
+    approved: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true
 });
