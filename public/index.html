@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Daedalus | Home</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles_main.css">
     <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -13,10 +13,15 @@
 <body>
 
     <div class="topnav">
-        <a class="active" href="#home">Home</a>
+        <a class="active" href="/">Home</a>
         <a href="#news">News</a>
         <a href="#contact">Contact</a>
-        <a href="aboutus.html">About</a>
+        <a id='x' href="/">About</a>
+        <div class="authentication">
+            <a id="login">Login</a>
+            <a id="logout">Logout</a>
+        </div>
+
     </div>
 
     <div class="video-container" style="overflow: auto;">
@@ -41,7 +46,7 @@
                 </td>
                 <td style="width: 33%">
                     <h2>Data Analytics</h2>
-                    <i class="material-icons" style="font-size:5em;color:#0C2464;">analytics</i>
+                    <a class="material-icons" href="flight_applications" style="font-size:5em;color:#0C2464;">analytics</a>
                     <p>Daedalus Analytics lets you measure your revenue stream as well as track flight's taxes. Take advantage of our handy tools.</p>
                 </td>
                 <td style="width: 33%">
@@ -62,13 +67,33 @@
                 </td>
                 <td style="width: 33%">
                     <h2>Gate/Parking Management</h2>
-                    <i class="material-icons" style="font-size:5em;color:#0C2464;">local_parking</i>
+                    <a class="material-icons" href="gate_management" style="font-size:5em;color:#0C2464;">local_parking</a>
                 </td>
             </tr>
         </table>
 
     </div>
+    <div id="loginForm" class="modal">
+        <form id="loginform" class="modal-content" method="post">
+            <div class="container">
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
 
+                <label for="passsword"><b>Password</b></label>
+                <input id="enterpsw" type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit">Login</button>
+                <label>
+            </label>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('loginForm').style.display='none'" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+    <script src="js/index.js"></script>
 </body>
 
 </html>

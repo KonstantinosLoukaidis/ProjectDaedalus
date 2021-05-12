@@ -1,0 +1,44 @@
+.loader {
+    width: 120px;
+    height: 120px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Creator https://www.linkedin.com/in/giovanni-mrqs/ */
+
+.svg-calLoader {
+    width: 230px;
+    height: 230px;
+    transform-origin: 115px 115px;
+    animation: 1.4s linear infinite loader-spin;
+}
+
+.cal-loader__plane {
+    fill: #3498db;
+}
+
+.cal-loader__path {
+    stroke: #3498db;
+    animation: 1.4s ease-in-out infinite loader-path;
+}
+
+@keyframes loader-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader-path {
+    0% {
+        stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+    }
+    50% {
+        stroke-dasharray: 0, 450, 10, 30, 10, 30, 10, 30, 10;
+    }
+    100% {
+        stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+    }
+}

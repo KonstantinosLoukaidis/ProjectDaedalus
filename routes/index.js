@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+var User = require('../models/user');
+var passport = require('passport');
+var authenticate = require('../authenticate');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });

@@ -1,48 +1,33 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Airlines = require('./airlines');
+const Airports = require('./airports');
+const Airplanes = require('./airplanes');
+
+var ArDepSchema = new Schema({
+    arrival_time: String,
+    arrival_day: String,
+    departure_time: String,
+    departure_day: String
+})
 
 var Network_PlannerSchema = new Schema({
     airline: {
-        type: String,
-        required: true
-    },
-    airline_icao: {
-        type: String,
-        required: true
-    },
-    airline_iata: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: Airlines
     },
     airport: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: Airports
     },
-    airport_icao: {
-        type: String,
-        required: true
+    ar_dep: [ArDepSchema],
+    aircraft: {
+        type: Schema.Types.ObjectId,
+        ref: Airplanes
     },
-    airport_iata: {
-        type: String,
-        required: true
-    },
-    monday_arr: String,
-    tuesday_arr: String,
-    wednesday_arr: String,
-    thursday_arr: String,
-    friday_arr: String,
-    saturday_arr: String,
-    sunday_arr: String,
-    monday_dep: String,
-    tuesday_dep: String,
-    wednesday_dep: String,
-    thursday_dep: String,
-    friday_dep: String,
-    saturday_dep: String,
-    sunday_dep: String,
     approved: {
-        type: Boolean,
-        default: false
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

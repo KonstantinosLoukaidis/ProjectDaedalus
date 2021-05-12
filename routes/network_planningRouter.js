@@ -7,6 +7,7 @@ const path = require('path');
 const Network_Planner = require('../models/network_planner');
 const Airlines = require('../models/airlines');
 const Airports = require('../models/airports');
+const Airplanes = require('../models/airplanes');
 
 const network_planningRouter = express.Router();
 
@@ -17,13 +18,59 @@ network_planningRouter.route('/')
         res.sendFile('network_planning.html', { root: path.join(__dirname, '../public') });
     })
     .post((req, res, next) => {
+        console.log(req.body);
         Network_Planner.create(req.body)
             .then((plan) => {
-                console.log('Plan created ', plan);
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.redirect('/network_planning');
-            }, (err) => next(err))
+                const tempPromise = new Promise((res, rej) => {
+                    if (Array.isArray(req.body.arrival_time)) {
+                        for (i in req.body.arrival_time) {
+                            if (req.body.arrival_time[i] != "") {
+                                let temp_obj = {
+                                    arrival_day: req.body.arr_day[i],
+                                    arrival_time: req.body.arrival_time[i],
+                                    departure_time: req.body.dep_time[i],
+                                    departure_day: req.body.dep_day[i]
+                                }
+                                plan.ar_dep.push(temp_obj);
+                            }
+                        }
+                    } else {
+                        if (req.body.arrival_time != "") {
+                            let temp_obj = {
+                                arrival_day: req.body.arr_day,
+                                arrival_time: req.body.arrival_time,
+                                departure_time: req.body.dep_time,
+                                departure_day: req.body.dep_day
+                            }
+                            plan.ar_dep.push(temp_obj);
+                        }
+                    }
+                    Airplanes.find({ $and: [{ Manufacturer: req.body.ac_man }, { Model: req.body.ac_model }] })
+                        .then((x) => {
+                            plan.aircraft = x[0]._id;
+                        })
+                        .catch((err) => next(err));
+                    Airlines.find({ $or: [{ IATA: req.body.airline_iata }, { ICAO: req.body.airline_icao }, { name: req.body.airline_name }] })
+                        .then((x) => {
+                            plan.airline = x[0]._id;
+                        })
+                        .catch((err) => next(err));
+                    Airports.find({ $or: [{ iata: req.body.airport_iata }, { icao: req.body.airport_icao }, { name: req.body.airport_name }] })
+                        .then((x) => {
+                            plan.airport = x[0]._id;
+                            res(plan);
+                        })
+                        .catch((err) => next(err));
+                }).then((plan) => {
+                    console.log("promise fullfilled");
+                    plan.save();
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.redirect('/network_planning');
+                });
+            }, (err) => {
+                next(err);
+            })
             .catch((err) => next(err));
     })
     .put((req, res, next) => {
@@ -60,5 +107,36 @@ network_planningRouter.route('/retrieve_airports')
                 else res.send(data);
             });
     });
+
+network_planningRouter.route('/ac_man_find')
+    .get((req, res, next) => {
+        Airplanes.aggregate([{
+                $group: {
+                    _id: "$Manufacturer"
+                }
+            }, {
+                $sort: {
+                    _id: 1
+                }
+            }])
+            .then((data, err) => {
+                if (err) throw err;
+                else if (!data) res.send(null);
+                else res.send(data);
+            });
+    });
+
+network_planningRouter.route('/ac_model_find')
+    .get((req, res, next) => {
+        var manufacturer = req.query.key;
+        Airplanes.find({ Manufacturer: manufacturer }, { Model: 1, _id: 0 }).sort({ Model: 1 })
+            .then((data, err) => {
+                if (err) throw err;
+                else if (!data) res.send(null);
+                else res.send(data);
+            });
+    });
+
+
 
 module.exports = network_planningRouter;

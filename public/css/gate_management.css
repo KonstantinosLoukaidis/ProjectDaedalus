@@ -1,0 +1,94 @@
+.gate-box {
+    border-radius: 10px;
+    width: 35em;
+    height: 22em;
+    border: 5px solid #0c2464;
+    padding: 10px;
+    margin: 10px;
+    transition: box-shadow .3s;
+}
+
+.gate-services {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-flow: row;
+}
+
+.gate-police-box {
+    width: 3em;
+    height: 3em;
+    border: 5px solid #135DD8;
+    padding: 0.1em;
+    background-color: #135DD8;
+    color: #fff;
+}
+
+.gate-fire-box {
+    width: 3em;
+    height: 3em;
+    border: 5px solid #CE2029;
+    padding: 0.1em;
+    background-color: #CE2029;
+    color: #fff;
+}
+
+.gate-ambulance-box {
+    width: 3em;
+    height: 3em;
+    border: 5px solid #EDFF21;
+    padding: 0.1em;
+    background-color: #EDFF21;
+    color: #212121;
+}
+
+.gate-box:hover {
+    box-shadow: 0 0 30px rgba(33, 33, 33, .2);
+}
+
+.gate-info {
+    display: grid;
+    grid-template-columns: 4fr 2fr 4fr;
+    grid-auto-flow: row;
+}
+
+.gate-aircraft {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    width: 10em;
+}
+
+.gate-name {
+    font-size: x-large;
+    color: gray;
+    display: block;
+}
+
+.gate-airline-logo {
+    width: 10em;
+    display: block;
+    text-align: left;
+    margin-top: 1.8em;
+}
+
+.gate-info-label {
+    color: grey;
+}
+
+.badge-pill {
+    padding-right: .65em;
+    padding-left: .65em;
+    border-radius: 10rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}

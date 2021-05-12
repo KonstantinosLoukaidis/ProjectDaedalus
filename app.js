@@ -4,16 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var network_planningRouter = require('./routes/network_planningRouter');
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+var passport = require('passport');
+var authenticate = require('./authenticate');
+var config = require('./config');
 
 const Network_Planner = require('./models/network_planner');
 const Airlines = require('./models/airlines');
 const Airports = require('./models/airports');
+const GateDispatcher = require('./models/gateDispatcher');
+const Gates = require('./models/gates');
+const Airplanes = require('./models/airplanes');
 
-const connect = mongoose.connect("mongodb://localhost:27017/ProjectDaedalusDB")
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const network_planningRouter = require('./routes/network_planningRouter');
+const gate_managementRouter = require('./routes/gate_managementRouter');
+const flight_applicationRouter = require('./routes/flight_applicationRouter');
+
+const connect = mongoose.connect(config.mongoUrl);
 connect.then((db) => {
     console.log('Connected currently to server');
 }, (err) => { console.log('An error has occured'); });
@@ -27,12 +37,38 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser(config.secretKey));
+
+app.use(session({
+    name: 'session-id',
+    secret: config.secretKey,
+    saveUninitialized: false,
+    resave: false,
+    store: new FileStore()
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/network_planning', network_planningRouter);
+
+function auth(req, res, next) {
+    if (!req.user) {
+        var err = new Error('You are not authenticated!');
+        err.status = 403;
+        next(err);
+    } else {
+        next();
+    }
+}
+
+app.use(auth);
+
+app.use('/gate_management', gate_managementRouter);
+app.use('/flight_applications', flight_applicationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -42,7 +42,7 @@ html {
 
 a {
     font-family: Poppins-Regular;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.7;
     color: #666666;
     margin: 0px;
@@ -50,10 +50,12 @@ a {
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
+    text-decoration: none;
 }
 
 a:focus {
     outline: none !important;
+    text-decoration: none;
 }
 
 a:hover {
@@ -82,8 +84,9 @@ p {
 
 ul,
 li {
-    margin: 0px;
+    margin-bottom: 10px;
     list-style-type: none;
+    font-size: 1.2rem;
 }
 
 
@@ -532,4 +535,55 @@ textarea.input100 {
 
 #go_back_from_form {
     margin-left: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    text-align: center;
+    margin: 10px;
+}
+
+.add_more_btn {
+    width: 40px;
+    height: 40px;
+}
+
+.add_more_tooltip_text {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgb(23, 4, 105);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.add_more_btn:hover .add_more_tooltip_text {
+    visibility: visible;
+}
+
+.bi:hover {
+    fill: rgb(23, 4, 105);
+}
+
+#arr_day {
+    width: 150px;
+}
+
+#dep_day {
+    width: 150px;
+}
+
+.ac_model {
+    margin-top: 5px;
+    visibility: hidden;
 }

@@ -13,9 +13,11 @@
     <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 
     <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/network_planning_form.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
 </head>
 
@@ -48,7 +50,7 @@
                 <h2>Airline Information</h2>
                 <p>
                     <label>Airline Name:</label>
-                    <input class="w3-input airline" name="airline" id="airline" type="text"></p>
+                    <input class="w3-input airline" name="airline_name" id="airline_name" type="text"></p>
                 <div class="w3-row-padding">
                     <div class="w3-half">
                         <label>ICAO:</label>
@@ -63,7 +65,7 @@
                 <h2>Target Airport Information</h2>
                 <p>
                     <label>Target Airport:</label>
-                    <input class="w3-input airport" name="airport" id="airport" type="text"></p>
+                    <input class="w3-input airport" name="airport_name" id="airport_name" type="text"></p>
                 <div class="w3-row-padding">
                     <div class="w3-half">
                         <label>ICAO:</label>
@@ -75,160 +77,64 @@
                     </div>
                 </div>
                 <br>
-                <div class="w3-row-padding">
-                    <h4>Schedule | Arrival at LGAV:</h4>
-                    <div class="w3-half">
-                        <ul>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h4>Schedule | Arrival at LGAV:</h4>
+                        <ul class='arrival_add'>
                             <li>
-                                <input class="w3-check" type="checkbox" value="Monday">
-                                <label>Monday</label>
-                                <label for="monday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="monday_arr" name="monday_arr">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Tuesday">
-                                <label>Tuesday</label>
-                                <label for="tuesday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="tuesday_arr" name="tuesday_arr">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Wednesday">
-                                <label>Wednesday</label>
-                                <label for="wednesday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="wednesday_arr" name="wednesday_arr">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Thursday">
-                                <label>Thursday</label>
-                                <label for="thursday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="thursday_arr" name="thursday_arr">
+                                <select class="w3-select w3-border" id='arr_day' name="arr_day">
+                                    <option value="monday">Monday</option>
+                                    <option value="tuesday">Tuesday</option> 
+                                    <option value="wednesday">Wednesday</option> 
+                                    <option value="thursday">Thursday</option> 
+                                    <option value="friday">Friday</option>
+                                    <option value="saturday">Saturday</option> 
+                                    <option value="sunday">Sunday</option>                                      
+                                </select>
+                                <label for="arr_day"> Arrival at:</label>
+                                <input type="time" id="arr_time" value="00:00" name="arrival_time">
 
                                 <small>time must be in GMT-2</small>
                             </li>
                         </ul>
                     </div>
-                    <div class="w3-half">
-                        <ul>
+                    <div class="grid-item">
+                        <h4>Schedule | Departure from LGAV:</h4>
+                        <ul class='dep_add'>
                             <li>
-                                <input class="w3-check" type="checkbox" value="Friday">
-                                <label>Friday</label>
-                                <label for="friday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="friday_arr" name="friday_arr">
-
-                                <small>time must be in GMT-2</small>
-
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Saturday">
-                                <label>Saturday</label>
-                                <label for="saturday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="saturday_arr" name="saturday_arr">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Sunday">
-                                <label>Sunday</label>
-                                <label for="sunday_arr"> | Arrival at:</label>
-
-                                <input type="time" id="sunday_arr" name="sunday_arr">
+                                <select class="w3-select w3-border" id='dep_day' name="dep_day">
+                                    <option value="monday">Monday</option>
+                                    <option value="tuesday">Tuesday</option> 
+                                    <option value="wednesday">Wednesday</option> 
+                                    <option value="thursday">Thursday</option> 
+                                    <option value="friday">Friday</option>
+                                    <option value="saturday">Saturday</option> 
+                                    <option value="sunday">Sunday</option>                                      
+                                </select>
+                                <label for="dep_day"> Arrival at:</label>
+                                <input type="time" id="dep_time" value="00:00" name="dep_time">
 
                                 <small>time must be in GMT-2</small>
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div class="add_more_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                        <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                      </svg>
+                    <span class="add_more_tooltip_text">Add more dates</span>
                 </div>
                 <br>
-                <div class="w3-row-padding">
-                    <h4>Schedule | Departure from LGAV:</h4>
-                    <div class="w3-half">
-                        <ul>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Monday">
-                                <label>Monday</label>
-                                <label for="monday_dep"> | Departure at:</label>
-
-                                <input type="time" id="monday_dep" name="monday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Tuesday">
-                                <label>Tuesday</label>
-                                <label for="tuesday_dep"> | Departure at:</label>
-
-                                <input type="time" id="tuesday_dep" name="tuesday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Wednesday">
-                                <label>Wednesday</label>
-                                <label for="wednesday_dep"> | Departure at:</label>
-
-                                <input type="time" id="wednesday_dep" name="wednesday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Thursday">
-                                <label>Thursday</label>
-                                <label for="thursday_dep"> | Departure at:</label>
-
-                                <input type="time" id="thursday_dep" name="thursday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="w3-half">
-                        <ul>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Friday">
-                                <label>Friday</label>
-                                <label for="friday_dep"> | Departure at:</label>
-
-                                <input type="time" id="friday_dep" name="friday_dep">
-
-                                <small>time must be in GMT-2</small>
-
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Saturday">
-                                <label>Saturday</label>
-                                <label for="saturday_dep"> | Departure at:</label>
-
-                                <input type="time" id="saturday_dep" name="saturday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                            <li>
-                                <input class="w3-check" type="checkbox" value="Sunday">
-                                <label>Sunday</label>
-                                <label for="sunday_dep"> | Departure at:</label>
-
-                                <input type="time" id="sunday_dep" name="sunday_dep">
-
-                                <small>time must be in GMT-2</small>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <hr>
                 <h2>Aircraft Type:</h2>
-                <select class="w3-select w3-border" name="option"></select>
+                <select class="w3-select w3-border ac_man" name="ac_man">
+                    <option value="none">Select manufacturer</option>
+                </select>
+                <select class="w3-select w3-border ac_model" name="ac_model">
+                    <option value="none">Select model</option>
+                </select>
                 <br>
                 <hr>
                 <br>
@@ -244,7 +150,7 @@
                 <br>
             </form>
             <button class="contact100-form-btn" id="go_back_from_form" style="background-color: rgb(12, 36, 100)">
-				<a href="index">
+				<a href="/" style="text-decoration:none ; color : #fff;">
 					<span>
 						Go back
 						<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
@@ -261,8 +167,9 @@
     <!--===============================================================================================-->
 
     <!--===============================================================================================-->
-    <script src="js/main.js"></script>
-    <script src="js/autocompleteform.js"></script>
+    <script src="js/main_form.js"></script>
+    <script src="js/network_planning_autocompleteform.js"></script>
+    <script src="js/network_planning.js"></script>
 
 </body>
 
