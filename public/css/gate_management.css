@@ -1,7 +1,7 @@
 .gate-box {
     border-radius: 10px;
     width: 35em;
-    height: 22em;
+    height: 30em;
     border: 5px solid #0c2464;
     padding: 10px;
     margin: 10px;
@@ -21,6 +21,7 @@
     padding: 0.1em;
     background-color: #135DD8;
     color: #fff;
+    margin-top: 5px;
 }
 
 .gate-fire-box {
@@ -30,6 +31,7 @@
     padding: 0.1em;
     background-color: #CE2029;
     color: #fff;
+    margin-top: 5px;
 }
 
 .gate-ambulance-box {
@@ -39,6 +41,7 @@
     padding: 0.1em;
     background-color: #EDFF21;
     color: #212121;
+    margin-top: 5px;
 }
 
 .gate-box:hover {

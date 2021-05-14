@@ -4,13 +4,6 @@ const Airlines = require('./airlines');
 const Airports = require('./airports');
 const Airplanes = require('./airplanes');
 
-var ArDepSchema = new Schema({
-    arrival_time: String,
-    arrival_day: String,
-    departure_time: String,
-    departure_day: String
-})
-
 var Network_PlannerSchema = new Schema({
     airline: {
         type: Schema.Types.ObjectId,
@@ -20,7 +13,12 @@ var Network_PlannerSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: Airports
     },
-    ar_dep: [ArDepSchema],
+    ar_dep: {
+        arrival_time: String,
+        arrival_day: String,
+        departure_time: String,
+        departure_day: String
+    },
     aircraft: {
         type: Schema.Types.ObjectId,
         ref: Airplanes
@@ -28,6 +26,14 @@ var Network_PlannerSchema = new Schema({
     approved: {
         type: Number,
         default: 0
+    },
+    plan_start: {
+        type: String,
+        default: "Plan start date"
+    },
+    plan_expire: {
+        type: String,
+        default: "Plan end date"
     }
 }, {
     timestamps: true

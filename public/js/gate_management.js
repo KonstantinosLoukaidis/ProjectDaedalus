@@ -1,7 +1,15 @@
 let gate_used = 1;
 let gm_pending = document.querySelector('.gm_pending');
 let gm_management = document.querySelector('.gate-management');
-
+const daysParser = Object({
+    "Monday": 1,
+    "Tuesday": 2,
+    "Wednesday": 3,
+    "Thursday": 4,
+    "Friday": 5,
+    "Saturday": 6,
+    "Sunday": 7
+})
 
 document.addEventListener('DOMContentLoaded', (event) => {
     //the event occurred
@@ -13,73 +21,78 @@ document.addEventListener('DOMContentLoaded', (event) => {
 })
 
 function getGates() {
-    fetch('http://localhost:3000/gate_management/pending_plans')
+    fetch('http://localhost:3000/admin-logged/gate_management/used_gates')
         .then(req => req.json())
         .then(res => {
             var loader = document.querySelector('.loader').remove();
-            for (plan of res) {
-                for (i in plan.ar_dep) {
-                    var new_gm = document.createElement('div');
-                    new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
-                    gate_used += 1;
-                    gm_pending.appendChild(new_gm);
-                    new_gm.innerHTML = `
+            for (gate of res) {
+                var new_gm = document.createElement('div');
+                new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
+                gate_used += 1;
+                gm_pending.appendChild(new_gm);
+                let wanted_date = getWantedDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]);
+                new_gm.innerHTML = `
                 <div class="gate-info">
                     <div>
                         <div class="gate-name">
-                            <h2>A 03</h2>
+                            <h2>${gate.gate.Name}</h2>
                         </div>
                     </div>
                     <div></div>
                     <div>
-                        <img class="gate-airline-logo" src=${plan.airline.logoLink} alt="logo">
+                        <img class="gate-airline-logo" src=${gate.network_plan.airline.logoLink} alt="logo">
                     </div>
                     <div>
                         <table style="width:100%">
                             <tr>
                                 <td>
                                     <div class="gate-info-label">Gate Terminal: </td>
-                                <td><strong>1</strong></td>
+                                <td><strong>${gate.gate.Gate}</strong></td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="gate-info-label">Gate Class: </td>
-                                <td><strong>${plan.aircraft.CLASSI}</strong></td>
+                                <td><strong>${gate.gate.Class}</strong></td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="gate-info-label">Aircraft Type: </td>
-                                <td><strong>${plan.aircraft.Manufacturer + plan.aircraft.Model}</strong></td>
+                                <td><strong>${gate.network_plan.aircraft.Manufacturer + gate.network_plan.aircraft.Model}</strong></td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="gate-info-label">Aircraft Registry: </td>
-                                <td><strong>${plan.aircraft_registry}</strong></td>
+                                <td><strong>${gate.network_plan.aircraft.Model.slice(0,4).toUpperCase()+gate_used}</strong></td>
                             </tr>
                         </table>
                         </div>
-                        <div><img class="gate-aircraft" src="img/a320.png"></div>
+                        <div><img class="gate-aircraft" src="https://i.ibb.co/s1Pd5gB/a320.png"></div>
                         <div>
                             <table style="width:100%">
                                 <tr>
                                     <td>
                                         <div class="gate-info-label">Airline: </td>
-                                    <td><strong>${plan.airline.name}</strong></td>
+                                    <td><strong>${gate.network_plan.airline.name}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="gate-info-label">Flight: </td>
-                                    <td><strong>${plan.arr_dep}</strong></td>
+                                    <td><strong>A1312</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="gate-info-label">To: </td>
-                                    <td><strong>${plan.airport.name}</strong></td>
+                                    <td><strong>${gate.network_plan.airport.name}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="gate-info-label">Departure: </td>
-                                    <td><strong>${plan.ar_dep[i].departure_time}</strong></td>
+                                        <div class="gate-info-label">Departure day: </td>
+                                    <td><strong>${wanted_date}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="gate-info-label">Departure time: </td>
+                                    <td><strong>${gate.network_plan.ar_dep.departure_time}</strong></td>
                                 </tr>
                             </table>
                             </div>
@@ -93,8 +106,14 @@ function getGates() {
                             <div></div>
                             <div><span class="badge badge-pill badge-warning" style="font-size: 1.4em;">Check-in</span></div>
                             </div>`
-                }
             }
         })
         .catch(err => console.log(err));
+}
+
+function getWantedDate(wanted_days) {
+    const wanted_date = new Date(Date.now());
+    wanted_days = wanted_days - wanted_date.getDay();
+    wanted_date.setDate(wanted_date.getDate() + wanted_days);
+    return wanted_date.toLocaleDateString('el-GR')
 }

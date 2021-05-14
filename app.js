@@ -67,8 +67,8 @@ function auth(req, res, next) {
 
 app.use(auth);
 
-app.use('/gate_management', gate_managementRouter);
-app.use('/flight_applications', flight_applicationRouter);
+app.use('/admin-logged/gate_management', gate_managementRouter);
+app.use('/admin-logged/flight_applications', flight_applicationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

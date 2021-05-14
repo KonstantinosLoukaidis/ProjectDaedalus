@@ -24,11 +24,10 @@ router.post('/signup', (req, res, next) => {
         });
 });
 
-
 router.post('/login', passport.authenticate('local'), (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({ success: true, status: 'You are successfully logged in!' });
+    res.json({ success: true, status: 'You are successfully logged in!', username: req.body.username });
 });
 
 router.get('/logout', (req, res) => {

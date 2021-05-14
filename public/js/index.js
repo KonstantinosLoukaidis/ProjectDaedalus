@@ -1,4 +1,5 @@
 const login = document.getElementById('login');
+const logged = document.getElementById('logged');
 login.addEventListener('click', (event) => {
     window.history.pushState({}, "", '/users/login');
     document.getElementById('loginForm').style.display = 'block';
@@ -34,10 +35,9 @@ function handleSubmit(event) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            window.history.back();
             modal.style.display = "none";
-            document.cookie = "logged=loggedIn; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";
-            togglelog();
+            window.location.replace("http://localhost:3000/admin-logged/flight_applications")
+            document.cookie = `logged=${data.username}; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/`;
         })
         .catch((error) => {
             alert("The username or password is wrong");
@@ -46,34 +46,31 @@ function handleSubmit(event) {
         });
 }
 
-const logout = document.getElementById('logout');
 const form = document.querySelector('form');
 form.addEventListener('submit', handleSubmit);
-
-logout.addEventListener('click', logoutUser);
-
-function logoutUser(event) {
-    fetch("http://localhost:3000/users/logout")
-        .then(res => res)
-        .then(res => {
-            document.cookie = "logged=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            togglelog();
-        })
-        .catch((error) => console.log(error));
-}
 
 window.onload = togglelog();
 
 function togglelog() {
-    if (document.cookie == 'logged=loggedIn') {
-        logout.style.display = "block";
+    if (document.cookie) {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('logged='))
+            .split('=')[1]
+        logged.style.display = "block";
+        logged.text = "Hello " + cookieValue;
         login.style.display = "none";
     } else {
-        logout.style.display = "none";
+        logged.style.display = "none";
         login.style.display = "block";
     }
 }
 
 const x = document.getElementById('x').addEventListener('click', () => {
-    document.cookie = 'logged';
+    window.history.back();
+    modal.style.display = "none";
+})
+
+logged.addEventListener('click', (event) => {
+    window.location.replace("http://localhost:3000/admin-logged/flight_applications");
 })
