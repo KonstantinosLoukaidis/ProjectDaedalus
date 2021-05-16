@@ -33,14 +33,18 @@ function getPendingData() {
                     <td class="table-action">
                         <a><i class="align-middle accept-plan-${innercounter}" data-toggle="tooltip" data-placement="left" title data-original-title="Accept" data-feather="check-circle"></i></a>
                         <a><i class="align-middle reject-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Reject" data-feather="x"></i></a>
+                        <a><i class="align-middle show-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
                 document.querySelector('.accept-plan-' + innercounter).addEventListener('click', (event) => {
                     changeApprove(pending_plan._id, 1, 0); // 1 === accept
                 });
-                document.querySelector('.reject-plan-' + innercounter++).addEventListener('click', (event) => {
+                document.querySelector('.reject-plan-' + innercounter).addEventListener('click', (event) => {
                     changeApprove(pending_plan._id, -1, 0); // -1 === reject
                 });
+                document.querySelector('.show-plan-' + innercounter++).addEventListener('click', () => {
+                    window.location.replace(window.location.href + `/${pending_plan._id}`)
+                })
             }
         })
         .catch((err) => console.log(err));
@@ -68,11 +72,15 @@ function getAcceptedData() {
                     <td>${accepted_plan.aircraft.Model}</td>
                     <td class="table-action">
                         <a><i class="align-middle Apending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
+                        <a><i class="align-middle Ashow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
-                document.querySelector('.Apending-plan-' + innercounter++).addEventListener('click', (event) => {
+                document.querySelector('.Apending-plan-' + innercounter).addEventListener('click', (event) => {
                     changeApprove(accepted_plan._id, 0, 1); // 0 === pending
                 });
+                document.querySelector('.Ashow-plan-' + innercounter++).addEventListener('click', () => {
+                    window.location.replace(window.location.href + `/${accepted_plan._id}`)
+                })
             }
         })
         .catch((err) => console.log(err));
@@ -101,11 +109,16 @@ function getRejectedData() {
                     <td>${rejected_plan.aircraft.Model}</td>
                     <td class="table-action">
                         <a><i class="align-middle Rpending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
+                        <a><i class="align-middle Rshow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
-                document.querySelector('.Rpending-plan-' + innercounter++).addEventListener('click', (event) => {
+                document.querySelector('.Rpending-plan-' + innercounter).addEventListener('click', (event) => {
+                    event.preventDefault()
                     changeApprove(rejected_plan._id, 0, -1); // 0 === pending
                 });
+                document.querySelector('.Rshow-plan-' + innercounter++).addEventListener('click', () => {
+                    window.location.replace(window.location.href + `/${rejected_plan._id}`)
+                })
             }
             reloadTime();
         })

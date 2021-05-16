@@ -1,0 +1,16 @@
+#Accepted {
+    background-color: green;
+}
+
+#Rejected {
+    background-color: red;
+}
+
+#Pending {
+    background-color: yellow;
+}
+
+.grid-container-actions {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}

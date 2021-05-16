@@ -56,7 +56,6 @@ flight_applicationRouter.route('/')
         }
     })
 
-
 flight_applicationRouter.route('/getPendingData')
     .get((req, res, next) => {
         Network_Planner.find({ approved: 0 })
@@ -86,6 +85,24 @@ flight_applicationRouter.route('/getAcceptedData')
 flight_applicationRouter.route('/getRejectedData')
     .get((req, res, next) => {
         Network_Planner.find({ approved: -1 })
+            .populate('airline')
+            .populate('airport')
+            .populate('aircraft')
+            .exec((err, data) => {
+                if (err) throw err;
+                else if (!data) res.send(null);
+                else res.send(data);
+            });
+    });
+
+flight_applicationRouter.route('/:id')
+    .get((req, res, next) => {
+        res.sendFile('flight_profile.html', { root: path.join(__dirname, '../public') });
+    })
+
+flight_applicationRouter.route('/:id/getAllPlans')
+    .get((req, res, next) => {
+        Network_Planner.find({ _id: req.params.id })
             .populate('airline')
             .populate('airport')
             .populate('aircraft')

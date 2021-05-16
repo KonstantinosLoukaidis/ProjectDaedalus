@@ -9,17 +9,13 @@
     <meta name="author" content="AdminKit">
     <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">
 
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+    <link rel="shortcut icon" href="/img/icons/icon-48x48.png" />
 
-    <title>Gate management | Project Daedalus</title>
+    <title>Flight Application | Project Daedalus</title>
 
-    <link href="../css/app-webkit.css" rel="stylesheet">
-    <script type="text/javascript" src="../functions_js/logout.js"></script>
-    <link href="../css/gate_management.css" rel="stylesheet">
-    <link href="../css/loader.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/css/app-webkit.css" rel="stylesheet">
+    <link href="/css/loader.css" rel="stylesheet">
+    <link href="/css/flight_profile.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,19 +31,19 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/admin-logged">
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="../flight_applications">
                             <i class="align-middle" data-feather="menu"></i> <span class="align-middle">Admin menu</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="/admin-logged/gate_management">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="../gate_management">
                             <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Gate management</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/admin-logged/flight_applications">
+                        <a class="sidebar-link" href="../flight_applications">
                             <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Flight applications</span>
                         </a>
                     </li>
@@ -112,19 +108,79 @@
                 </ul>
             </div>
         </nav>
+
         <div class="main">
+
+
             <main class="content">
-                <div class="container-fluid p-0 gate-management">
-                    <h1 class="h3 mb-3">Gate Management</h1>
-                    <div class="row grid-container gm_pending">
+                <div class="container-fluid p-0">
+                    <div class="for-loader"></div>
+                    <h1 class="h3 mb-3 application-title">Network Planning Application | ID: </h1>
+                    <div class="row">
+                        <div class="col-md-4 col-xl-3 application">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Airline Details</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <img class="img-fluid mb-2" id="airline-logo" width="400" />
+                                    <h5 class="card-title mb-0" id="airline-name"></h5>
+                                    <div class="text-muted mb-2" id="airline-iata">IATA: | ICAO: </div>
+
+                                    <div>
+                                        <a class="btn btn-primary btn-sm plan-status"></a>
+                                    </div>
+                                </div>
+                                <hr class="my-0" />
+                                <div class="card-body">
+                                    <h5 class="h6 card-title">Flight Details</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> From/To: <a href="https://skyvector.com/airport/LGAV">Athens International Airport - LGAV, GR</a></li>
+                                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> From/To:
+                                            <a class="skyvector-href" target="_blank"></a>
+                                        </li>
+                                        <li class="mb-1" id="aircraft"><span data-feather="send" class="feather-sm mr-1"></span> Aircraft:</li>
+                                    </ul>
+                                </div>
+                                <hr class="my-0" />
+                                <div class="card-body">
+                                    <h5 class="h6 card-title">Schedule</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <strong>Departure from LGAV:</strong>
+                                        <li class="mb-1" id="departure"></li>
+                                    </ul>
+                                    <br>
+                                    <ul class="list-unstyled mb-0">
+                                        <strong>Arrival at LGAV:</strong>
+                                        <li class="mb-1" id="arrival"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-xl-9 application">
+                            <div class="card flex-fill w-100">
+                                <div class="card-header">
+
+                                    <h5 class="card-title mb-0">Real-Time</h5>
+                                </div>
+                                <div class="card-body px-4">
+                                    <div id="world_map" style="height:600px;"></div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </main>
         </div>
     </div>
-    <script src="../js/app-webkit.js"></script>
-    <script src="../js/gate_management.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- <script src="js/vendor.js"></script> -->
+    <script src="/js/app-webkit.js"></script>
+    <script src="/js/flight_profile.js"></script>
+
 </body>
 
 </html>

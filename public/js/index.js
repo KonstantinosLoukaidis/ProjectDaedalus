@@ -36,8 +36,8 @@ function handleSubmit(event) {
         .then(data => {
             console.log('Success:', data);
             modal.style.display = "none";
-            window.location.replace("http://localhost:3000/admin-logged/flight_applications")
-            document.cookie = `logged=${data.username}; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/`;
+            window.location.replace("http://localhost:3000/admin-logged/")
+            document.cookie = `logged=${data.username}; path=/`;
         })
         .catch((error) => {
             alert("The username or password is wrong");
@@ -72,5 +72,5 @@ const x = document.getElementById('x').addEventListener('click', () => {
 })
 
 logged.addEventListener('click', (event) => {
-    window.location.replace("http://localhost:3000/admin-logged/flight_applications");
+    window.location.replace("http://localhost:3000/admin-logged");
 })

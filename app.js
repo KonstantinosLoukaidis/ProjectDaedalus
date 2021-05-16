@@ -16,12 +16,14 @@ const Airports = require('./models/airports');
 const GateDispatcher = require('./models/gateDispatcher');
 const Gates = require('./models/gates');
 const Airplanes = require('./models/airplanes');
+const Flight = require('./models/flight');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const network_planningRouter = require('./routes/network_planningRouter');
 const gate_managementRouter = require('./routes/gate_managementRouter');
 const flight_applicationRouter = require('./routes/flight_applicationRouter');
+const adminHelloRouter = require('./routes/adminHelloRouter');
 
 const connect = mongoose.connect(config.mongoUrl);
 connect.then((db) => {
@@ -67,6 +69,7 @@ function auth(req, res, next) {
 
 app.use(auth);
 
+app.use('/admin-logged', adminHelloRouter);
 app.use('/admin-logged/gate_management', gate_managementRouter);
 app.use('/admin-logged/flight_applications', flight_applicationRouter);
 
