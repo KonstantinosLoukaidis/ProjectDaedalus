@@ -8,7 +8,7 @@ const daysParser = Object({
     "Thursday": 4,
     "Friday": 5,
     "Saturday": 6,
-    "Sunday": 7
+    "Sunday": 0
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -26,12 +26,18 @@ function getGates() {
         .then(res => {
             var loader = document.querySelector('.loader').remove();
             for (gate of res) {
-                var new_gm = document.createElement('div');
-                new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
-                gate_used += 1;
-                gm_pending.appendChild(new_gm);
-                let wanted_date = getWantedDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]);
-                new_gm.innerHTML = `
+                let tempDate = new Date()
+                let arrival_day = getBackDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]);
+                let arrival_time = gate.network_plan.ar_dep.arrival_time.split(":");
+                arrival_day.setHours(arrival_time[0], arrival_time[1], 0);
+                console.log(arrival_day)
+                if (arrival_day < tempDate) {
+                    var new_gm = document.createElement('div');
+                    new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
+                    gate_used += 1;
+                    gm_pending.appendChild(new_gm);
+                    let wanted_date = getWantedDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]).toLocaleDateString('el-GR');
+                    new_gm.innerHTML = `
                 <div class="gate-info">
                     <div>
                         <div class="gate-name">
@@ -57,7 +63,7 @@ function getGates() {
                             <tr>
                                 <td>
                                     <div class="gate-info-label">Aircraft Type: </td>
-                                <td><strong>${gate.network_plan.aircraft.Manufacturer + gate.network_plan.aircraft.Model}</strong></td>
+                                <td><strong>${gate.network_plan.aircraft.Manufacturer +" "+ gate.network_plan.aircraft.Model}</strong></td>
                             </tr>
                             <tr>
                                 <td>
@@ -77,7 +83,7 @@ function getGates() {
                                 <tr>
                                     <td>
                                         <div class="gate-info-label">Flight: </td>
-                                    <td><strong>A1312</strong></td>
+                                    <td><strong>${gate.flight_number}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -106,14 +112,22 @@ function getGates() {
                             <div></div>
                             <div><span class="badge badge-pill badge-warning" style="font-size: 1.4em;">Check-in</span></div>
                             </div>`
+                }
             }
         })
         .catch(err => console.log(err));
 }
 
-function getWantedDate(wanted_days) {
+function getWantedDate(wanted_days) { //Gets next closest day
     const wanted_date = new Date(Date.now());
-    wanted_days = wanted_days - wanted_date.getDay();
+    wanted_days = Math.abs(wanted_days - wanted_date.getDay())
     wanted_date.setDate(wanted_date.getDate() + wanted_days);
-    return wanted_date.toLocaleDateString('el-GR')
+    return wanted_date
+}
+
+function getBackDate(wanted_days) { // Gets the closest date
+    const wanted_date = new Date(Date.now());
+    wanted_days = wanted_days - wanted_date.getDay()
+    wanted_date.setDate(wanted_date.getDate() + wanted_days);
+    return wanted_date
 }

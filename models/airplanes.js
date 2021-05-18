@@ -5,7 +5,8 @@ var Airplanes = mongoose.model('Airplane',
     new Schema({
         Manufacturer: String,
         Model: String,
-        CLASSI: String
+        CLASSI: String,
+        MTOW: String
     }),
     'airplanes');
 

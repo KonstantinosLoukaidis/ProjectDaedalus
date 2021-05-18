@@ -14,6 +14,7 @@ var GateDispatcherSchema = new Schema({
     },
     arr_runway: String,
     dep_runway: String,
+    flight_number: String
 }, {
     timestamps: true
 });

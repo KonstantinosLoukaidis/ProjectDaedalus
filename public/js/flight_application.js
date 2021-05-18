@@ -19,10 +19,13 @@ function getPendingData() {
         .then(req => req.json())
         .then(res => {
             let innercounter = 0;
-            for (pending_plan of res) {
+            let plans = new Array();
+            for (plan of res) plans.push(plan)
+            for (pending_plan of plans) {
                 var rowCount = pendingTable.rows.length;
                 let newPlan = document.createElement('tr');
                 pendingTable.appendChild(newPlan);
+                newPlan.id = innercounter;
                 newPlan.innerHTML = `
                     <td>
                         <img src=${pending_plan.airline.logoLink} width="48" height="48" class="rounded-circle mr-2" alt=${pending_plan.airline.name}> ${pending_plan.airline.name}
@@ -31,19 +34,19 @@ function getPendingData() {
                     <td>ATH</td>
                     <td>${pending_plan.aircraft.Model}</td>
                     <td class="table-action">
-                        <a><i class="align-middle accept-plan-${innercounter}" data-toggle="tooltip" data-placement="left" title data-original-title="Accept" data-feather="check-circle"></i></a>
-                        <a><i class="align-middle reject-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Reject" data-feather="x"></i></a>
-                        <a><i class="align-middle show-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
+                        <a><i id=${innercounter} class="align-middle accept-plan-${innercounter}" data-toggle="tooltip" data-placement="left" title data-original-title="Accept" data-feather="check-circle"></i></a>
+                        <a><i id=${innercounter} class="align-middle reject-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Reject" data-feather="x"></i></a>
+                        <a><i id=${innercounter} class="align-middle show-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
                 document.querySelector('.accept-plan-' + innercounter).addEventListener('click', (event) => {
-                    changeApprove(pending_plan._id, 1, 0); // 1 === accept
+                    changeApprove(plans[event.target.id]._id, 1, 0); // 1 === accept
                 });
                 document.querySelector('.reject-plan-' + innercounter).addEventListener('click', (event) => {
-                    changeApprove(pending_plan._id, -1, 0); // -1 === reject
+                    changeApprove(plans[event.target.id]._id, -1, 0); // -1 === reject
                 });
-                document.querySelector('.show-plan-' + innercounter++).addEventListener('click', () => {
-                    window.location.replace(window.location.href + `/${pending_plan._id}`)
+                document.querySelector('.show-plan-' + innercounter++).addEventListener('click', (event) => {
+                    window.location.replace(window.location.href + `/${plans[event.target.id]._id}`)
                 })
             }
         })
@@ -56,6 +59,8 @@ function getAcceptedData() {
         .then(res => {
             let colour
             let innercounter = 0;
+            let plans = new Array();
+            for (plan of res) plans.push(plan)
             for (accepted_plan of res) {
                 var rowCount = acceptedTable.rows.length;
                 if (rowCount % 2 == 0) colour = "#9ccc65"
@@ -71,15 +76,15 @@ function getAcceptedData() {
                     <td>ATH</td>
                     <td>${accepted_plan.aircraft.Model}</td>
                     <td class="table-action">
-                        <a><i class="align-middle Apending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
-                        <a><i class="align-middle Ashow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
+                        <a><i id=${innercounter} class="align-middle Apending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
+                        <a><i id=${innercounter} class="align-middle Ashow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
                 document.querySelector('.Apending-plan-' + innercounter).addEventListener('click', (event) => {
-                    changeApprove(accepted_plan._id, 0, 1); // 0 === pending
+                    changeApprove(plans[event.target.id]._id, 0, 1); // 0 === pending
                 });
-                document.querySelector('.Ashow-plan-' + innercounter++).addEventListener('click', () => {
-                    window.location.replace(window.location.href + `/${accepted_plan._id}`)
+                document.querySelector('.Ashow-plan-' + innercounter++).addEventListener('click', (event) => {
+                    window.location.replace(window.location.href + `/${plans[event.target.id]._id}`)
                 })
             }
         })
@@ -93,6 +98,8 @@ function getRejectedData() {
             document.querySelector('.loader').remove();
             let colour;
             let innercounter = 0;
+            let plans = new Array();
+            for (plan of res) plans.push(plan)
             for (rejected_plan of res) {
                 var rowCount = rejectedTable.rows.length;
                 if (rowCount % 2 == 0) colour = "#ff9194"
@@ -108,16 +115,15 @@ function getRejectedData() {
                     <td>ATH</td>
                     <td>${rejected_plan.aircraft.Model}</td>
                     <td class="table-action">
-                        <a><i class="align-middle Rpending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
-                        <a><i class="align-middle Rshow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
+                        <a><i id=${innercounter} class="align-middle Rpending-plan-${innercounter}" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i></a>
+                        <a><i id=${innercounter} class="align-middle Rshow-plan-${innercounter}" data-toggle="tooltip" data-placement="right" title data-original-title="Show" data-feather="eye"></i></a>
                     </td>`
                 feather.replace();
                 document.querySelector('.Rpending-plan-' + innercounter).addEventListener('click', (event) => {
-                    event.preventDefault()
-                    changeApprove(rejected_plan._id, 0, -1); // 0 === pending
+                    changeApprove(plans[event.target.id]._id, 0, -1); // 0 === pending
                 });
                 document.querySelector('.Rshow-plan-' + innercounter++).addEventListener('click', () => {
-                    window.location.replace(window.location.href + `/${rejected_plan._id}`)
+                    window.location.replace(window.location.href + `/${plans[event.target.id]._id}`)
                 })
             }
             reloadTime();

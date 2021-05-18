@@ -24,6 +24,7 @@ const network_planningRouter = require('./routes/network_planningRouter');
 const gate_managementRouter = require('./routes/gate_managementRouter');
 const flight_applicationRouter = require('./routes/flight_applicationRouter');
 const adminHelloRouter = require('./routes/adminHelloRouter');
+const flight_tableRouter = require('./routes/flight_tableRouter');
 
 const connect = mongoose.connect(config.mongoUrl);
 connect.then((db) => {
@@ -56,6 +57,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/network_planning', network_planningRouter);
+app.use('/flight_table', flight_tableRouter);
 
 function auth(req, res, next) {
     if (!req.user) {
@@ -72,6 +74,7 @@ app.use(auth);
 app.use('/admin-logged', adminHelloRouter);
 app.use('/admin-logged/gate_management', gate_managementRouter);
 app.use('/admin-logged/flight_applications', flight_applicationRouter);
+app.use('/admin-logged/flight_table', flight_tableRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
