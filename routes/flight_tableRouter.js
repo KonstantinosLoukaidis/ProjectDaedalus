@@ -20,9 +20,163 @@ flight_tableRouter.route('/')
         res.sendFile('flight_Table.html', { root: path.join(__dirname, '../public') });
     })
 
-flight_tableRouter.route('/getArrivals?')
+const daysParser = Object({
+    "Monday": 1,
+    "Tuesday": 2,
+    "Wednesday": 3,
+    "Thursday": 4,
+    "Friday": 5,
+    "Saturday": 6,
+    "Sunday": 7
+})
+
+function getWantedDate(wanted_days) { //Gets next closest day
+    const wanted_date = new Date(Date.now());
+    if ((wanted_days - wanted_date.getDay()) < 0) wanted_days = 7 - Math.abs((wanted_days - wanted_date.getDay()))
+    else wanted_days = wanted_days - wanted_date.getDay();
+    wanted_date.setDate(wanted_date.getDate() + wanted_days);
+    return wanted_date
+}
+
+function getrawDate(wanted_days) {
+    const wanted_date = new Date(Date.now());
+    wanted_date.setDate(wanted_date.getDate() + wanted_days);
+    return wanted_date
+}
+
+flight_tableRouter.route('/getArrivals')
     .get((req, res, next) => {
-        console.log(req.url)
+        let lowerbound = getrawDate(-1)
+        let upperbound = getrawDate(2)
+        upperbound.setHours(23, 59, 59, 999)
+        lowerbound.setHours(0, 0, 0, 0)
+        let tz = (new Date()).getTimezoneOffset() * 60000;
+        upperbound = (new Date(upperbound - tz)).toISOString()
+        lowerbound = (new Date(lowerbound - tz)).toISOString()
+        console.log(lowerbound)
+        console.log(upperbound)
+        Flight.find({ 'flight_arrival': { "$gte": lowerbound, "$lt": upperbound } })
+            .populate('gate_dispatcher')
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airline'
+                    }
+                }
+            })
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airport'
+                    }
+                }
+            })
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'gate'
+                }
+            })
+            .exec((err, data) => {
+                res.send(data)
+            })
     })
+
+flight_tableRouter.route('/getDepartures')
+    .get((req, res, next) => {
+        let lowerbound = getrawDate(-1)
+        let upperbound = getrawDate(2)
+        upperbound.setHours(23, 59, 59, 999)
+        lowerbound.setHours(0, 0, 0, 0)
+        let tz = (new Date()).getTimezoneOffset() * 60000;
+        upperbound = (new Date(upperbound - tz)).toISOString()
+        lowerbound = (new Date(lowerbound - tz)).toISOString()
+        Flight.find({ 'flight_departure': { "$gte": lowerbound, "$lt": upperbound } })
+            .populate('gate_dispatcher')
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airline'
+                    }
+                }
+            })
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airport'
+                    }
+                }
+            })
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'gate'
+                }
+            })
+            .exec((err, data) => {
+                if (!data) res.send(null)
+                res.send(data)
+            })
+    })
+
+// flight_tableRouter.route('/getArrivals/?')
+//     .get((req, res, next) => {
+//         let dayToSearch = req.url.split('?')[1]
+//         let upperDateBound = getWantedDate(daysParser[dayToSearch])
+//         let lowerDateBound = new Date(upperDateBound)
+//         upperDateBound.setHours(23, 59, 59, 999)
+//         lowerDateBound.setHours(0, 0, 0, 0)
+//         let tz = (new Date()).getTimezoneOffset() * 60000;
+//         upperDateBound = (new Date(upperDateBound - tz)).toISOString()
+//         lowerDateBound = (new Date(lowerDateBound - tz)).toISOString()
+//         Flight.find({ 'flight_arrival': { "$gte": lowerDateBound, "$lt": upperDateBound } })
+//             .populate('gate_dispatcher')
+//             .populate({
+//                 path: 'gate_dispatcher',
+//                 populate: {
+//                     path: 'network_plan',
+//                     populate: {
+//                         path: 'airline'
+//                     }
+//                 }
+//             })
+//             .exec((err, data) => {
+//                 res.send(data)
+//             })
+//     })
+
+// flight_tableRouter.route('/getDepartures/?')
+//     .get((req, res, next) => {
+//         let dayToSearch = req.url.split('?')[1]
+//         let upperDateBound = getWantedDate(daysParser[dayToSearch])
+//         let lowerDateBound = new Date(upperDateBound)
+//         upperDateBound.setHours(23, 59, 59, 999)
+//         lowerDateBound.setHours(0, 0, 0, 0)
+//         let tz = (new Date()).getTimezoneOffset() * 60000;
+//         upperDateBound = (new Date(upperDateBound - tz)).toISOString()
+//         lowerDateBound = (new Date(lowerDateBound - tz)).toISOString()
+//         Flight.find({ 'flight_departure': { "$gte": lowerDateBound, "$lt": upperDateBound } })
+//             .populate('gate_dispatcher')
+//             .populate({
+//                 path: 'gate_dispatcher',
+//                 populate: {
+//                     path: 'network_plan',
+//                     populate: {
+//                         path: 'airline'
+//                     }
+//                 }
+//             })
+//             .exec((err, data) => {
+//                 res.send(data)
+//             })
+//     })
 
 module.exports = flight_tableRouter;

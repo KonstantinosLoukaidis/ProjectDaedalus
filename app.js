@@ -25,6 +25,7 @@ const gate_managementRouter = require('./routes/gate_managementRouter');
 const flight_applicationRouter = require('./routes/flight_applicationRouter');
 const adminHelloRouter = require('./routes/adminHelloRouter');
 const flight_tableRouter = require('./routes/flight_tableRouter');
+const analyticsRouter = require('./routes/analyticsRouter');
 
 const connect = mongoose.connect(config.mongoUrl);
 connect.then((db) => {
@@ -75,6 +76,7 @@ app.use('/admin-logged', adminHelloRouter);
 app.use('/admin-logged/gate_management', gate_managementRouter);
 app.use('/admin-logged/flight_applications', flight_applicationRouter);
 app.use('/admin-logged/flight_table', flight_tableRouter);
+app.use('/admin-logged/analytics', analyticsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

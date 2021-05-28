@@ -1,0 +1,106 @@
+{
+  "totals": {
+    "earnings": 150182.6,
+    "parking_fees": 1396.5700000000002,
+    "landing_charges": 142903.88,
+    "prm_charges": 4160.16,
+    "passengers": 428,
+    "flights": 4
+  },
+  "January": {
+    "earnings": 241242,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "February": {
+    "earnings": 342123,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "March": {
+    "earnings": 123122,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "April": {
+    "earnings": 76295.35,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "May": {
+    "earnings": 50182.38,
+    "parking_fees": 319.68,
+    "landing_charges": 47685.42,
+    "prm_charges": 2177.28,
+    "passengers": 224,
+    "flights": 2
+  },
+  "June": {
+    "earnings": 98278.22,
+    "parking_fees": 1076.89,
+    "landing_charges": 95218.46,
+    "prm_charges": 1982.88,
+    "passengers": 204,
+    "flights": 2
+  },
+  "July": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "August": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "September": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "October": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "November": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  },
+  "December": {
+    "earnings": 0,
+    "parking_fees": 0,
+    "landing_charges": 0,
+    "prm_charges": 0,
+    "passengers": 0,
+    "flights": 0
+  }
+}

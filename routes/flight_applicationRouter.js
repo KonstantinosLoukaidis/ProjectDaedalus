@@ -44,6 +44,7 @@ flight_applicationRouter.route('/')
             if (req.body.action == 0 && req.body.prev_status == 1) {
                 GateDispatcher.find({ 'network_plan': req.body.plan_id })
                     .then((data, err) => {
+                        console.log(data)
                         removeFlight(data[0]._id);
                         removeGate(req.body.plan_id);
                     })
@@ -213,62 +214,107 @@ function getWantedDate(wanted_days) { //Gets next closest day
     return wanted_date
 }
 
+
 function getNextDate(previousDate, wanted_days) {
-    const nextdate = new Date();
-    if ((wanted_days - nextdate.getDay()) < 0) wanted_days = 7 - (wanted_days - nextdate.getDay())
-    else wanted_days = wanted_days - nextdate.getDay();
-    nextdate.setDate(nextdate.getDate() + wanted_days);
-    if (nextdate < previousDate) nextdate.setDate(nextdate.getDate() + 7)
+    const nextdate = new Date(previousDate);
+    if ((wanted_days - nextdate.getDay()) < 0) wanted_days = 7 + (wanted_days - nextdate.getDay())
+    else wanted_days = wanted_days - previousDate.getDay();
+    nextdate.setDate(previousDate.getDate() + wanted_days);
     return nextdate
 }
 
-function allocateFlight(gatedispatchedId, planId) {
-    let dataToSend = {
-        flight_number: null,
-        gate_dispatcher: gatedispatchedId,
-        passengers: Math.floor(Math.random() * 180),
-        passengers_charges: 0,
-        paid: false,
-        landing_charge: 0,
-        parking_charge: 0,
-        total_ammount: 0,
-        parking_surcharges: 0,
-        landing_surcharges: 0,
-        flight_arrival: null,
-        flight_departure: null,
-        passed: false
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
+function delay_generator() {
+
+    //possibilities of delay 10%
+    let p = getRandomInt(0, 9);
+    let delay;
+
+    //if p = 0 => we have delay
+    if (p === 0) {
+
+        //delay in minutes
+        delay = getRandomInt(15, 180);
+
+    } else {
+        //non significant delay
+        delay = getRandomInt(-15, 14);
     }
 
-    let promise = new Promise((res, rej) => {
-        Network_Planner.find({ '_id': planId })
-            .populate('aircraft')
-            .populate('airline')
-            .exec((err, data) => {
-                let tempObj1 = calculateLandingCharges(data[0].aircraft.MTOW, data[0].ar_dep)
-                dataToSend.landing_charge = (tempObj1.landingCharges).toFixed(2);
-                dataToSend.landing_surcharges = tempObj1.surcharges;
-                let tempObj2 = calculateParkingCharges(data[0].aircraft.MTOW, data[0].ar_dep)
-                dataToSend.parking_charge = (tempObj2.parkingCharges).toFixed(2);
-                dataToSend.parking_surcharges = tempObj2.surcharges;
-                let passengers_charges = 9.72 * dataToSend.passengers;
-                dataToSend.passengers_charges = (passengers_charges).toFixed(2);
-                dataToSend.total_ammount = (passengers_charges + tempObj2.parkingCharges + tempObj1.landingCharges).toFixed(2);
-                dataToSend.flight_number = generateFlightNumber(data[0].airline.IATA, gatedispatchedId._id);
-                dataToSend.flight_arrival = getWantedDate(daysParser[String(data[0].ar_dep.arrival_day)]).toDateString(); //for flight to be unique
-                dataToSend.flight_departure = getNextDate(dataToSend.flight_arrival, daysParser[String(data[0].ar_dep.departure_day)]).toDateString();
-                let newFlight = new Flight(dataToSend)
-                newFlight.save((err) => {
-                    if (err) throw err;
-                    else(console.log(dataToSend))
+    //return expected time difference in minutes
+    //console.log(delay)
+    return delay
+}
+
+
+function allocateFlight(gatedispatchedId, planId) {
+    Network_Planner.findOne({ '_id': planId })
+        .populate('aircraft')
+        .populate('airline')
+        .exec((err, data) => {
+            if (err) throw err
+            let dates = WeeksInDueDate(data.plan_expire, daysParser[String(data.ar_dep.arrival_day)])
+            console.log(dates)
+            for (date of dates) {
+                let dataToSend = {
+                    flight_number: null,
+                    gate_dispatcher: gatedispatchedId,
+                    passengers: Math.floor(Math.random() * 180),
+                    passengers_charges: 0,
+                    paid: false,
+                    landing_charge: 0,
+                    parking_charge: 0,
+                    total_ammount: 0,
+                    parking_surcharges: 0,
+                    landing_surcharges: 0,
+                    flight_arrival: null,
+                    expected_arrival: null,
+                    flight_departure: null,
+                    passed: false
+                }
+                let promise = new Promise((res, rej) => {
+                    let tempObj1 = calculateLandingCharges(data.aircraft.MTOW, data.ar_dep)
+                    dataToSend.landing_charge = (tempObj1.landingCharges).toFixed(2);
+                    dataToSend.landing_surcharges = tempObj1.surcharges;
+                    let tempObj2 = calculateParkingCharges(data.aircraft.MTOW, data.ar_dep)
+                    dataToSend.parking_charge = (tempObj2.parkingCharges).toFixed(2);
+                    dataToSend.parking_surcharges = tempObj2.surcharges;
+                    let passengers_charges = 9.72 * dataToSend.passengers;
+                    dataToSend.passengers_charges = (passengers_charges).toFixed(2);
+                    dataToSend.total_ammount = (passengers_charges + tempObj2.parkingCharges + tempObj1.landingCharges).toFixed(2);
+                    dataToSend.flight_number = generateFlightNumber(data.airline.IATA, gatedispatchedId._id);
+                    let artimes = data.ar_dep.arrival_time.split(':');
+                    let deptimes = data.ar_dep.departure_time.split(':')
+                    let ardate = new Date(date)
+                    ardate.setHours(artimes[0], artimes[1], 0) //for flight to be unique
+                    let expdate = new Date(ardate.getTime() + delay_generator() * 60000);
+                    let atz = ardate.getTimezoneOffset() * 60000;
+                    let etz = expdate.getTimezoneOffset() * 60000;
+                    dataToSend.flight_arrival = (new Date(ardate - atz)).toISOString()
+                    let depdate = getNextDate(ardate, daysParser[String(data.ar_dep.departure_day)]);
+                    depdate.setHours(deptimes[0], deptimes[1], 0)
+                    let dtz = depdate.getTimezoneOffset() * 60000;
+                    dataToSend.flight_departure = (new Date(depdate - dtz)).toISOString()
+                    dataToSend.expected_arrival = (new Date(expdate - etz)).toISOString()
+                    let newFlight = new Flight(dataToSend)
+                    newFlight.save((err) => {
+                        if (err) throw err;
+                        else(console.log(dataToSend))
+                    })
+                    res()
                 })
-                res()
-            })
-    })
+            }
+        })
 }
 
 function removeFlight(gateDispatcherId) {
     console.log(gateDispatcherId)
-    Flight.deleteOne({ 'gate_dispatcher': gateDispatcherId })
+    Flight.deleteMany({ 'gate_dispatcher': gateDispatcherId })
         .then((data, err) => {
             if (err) throw err
             else {
@@ -278,10 +324,11 @@ function removeFlight(gateDispatcherId) {
 }
 
 function calculateLandingCharges(MTOW, ar_dep) {
+    console.log(MTOW)
     let wanted_date = getWantedDate(daysParser[String(ar_dep.arrival_day)]);
     let ar_time = ar_dep.arrival_time
     let landingChargeBeforeSurcharges = 0;
-    MTOW = Number(MTOW.split(',').join('.'));
+    MTOW = Number(MTOW.split(',').slice(0, 2).join('.'));
     let surcharges = 1;
     let upperDate = new Date().setHours(21, 0, 0);
     let lowerDate = new Date().setHours(6, 0, 0);
@@ -320,7 +367,7 @@ function calculateParkingCharges(MTOW, ar_dep) {
 
     let timeDif = (ar_date.getTime() - dep_date.getTime()) / (1000 * 3600);
     timeDif = Math.abs(Math.round(timeDif)) - 2;
-    MTOW = Number(MTOW.split(',').join('.'));
+    MTOW = Number(MTOW.split(',').slice(0, 2).join('.'));
     let parkingChargeBeforeSurcharges = 0;
     if (MTOW <= 10) parkingChargeBeforeSurcharges = timeDif * 0.2759
     else if (MTOW > 10 && MTOW <= 50) parkingChargeBeforeSurcharges = timeDif * 0.0275 * MTOW
@@ -338,7 +385,7 @@ function calculateParkingCharges(MTOW, ar_dep) {
 
 function generateFlightNumber(IATA, id) {
     id = String(id)
-    flight_number = IATA;
+    flight_number = IATA + " ";
     for (let i = 1, counter = 0; i < id.length; i++) {
         if (id.slice(-(i + 1), -i).match(/[a-z]/i) != null) {
             flight_number += id.slice(-(i + 1), -i).toUpperCase()
@@ -350,8 +397,10 @@ function generateFlightNumber(IATA, id) {
 }
 
 function WeeksInDueDate(duedate, days) {
+    duedate = new Date(duedate)
     let dates = new Array()
     let b = new Date()
+    if (getWantedDate(days).getDate() == b.getDate()) days += 7
     while (getWantedDate(days) < duedate) {
         b = getWantedDate(days)
         dates.push(b)

@@ -16,6 +16,7 @@ var FlightSchema = new Schema({
     parking_surcharges: Number,
     landing_surcharges: Number,
     flight_arrival: String,
+    expected_arrival: String,
     flight_departure: String,
     passed: false
 }, {

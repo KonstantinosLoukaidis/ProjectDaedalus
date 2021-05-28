@@ -15,6 +15,8 @@
 
     <link href="../css/app-webkit.css" rel="stylesheet">
     <link href="../css/slider.css" rel="stylesheet">
+    <link href="../css/loader.css" rel="stylesheet">
+    <link href="../css/flight_table.css" rel="stylesheet">
 </head>
 
 <body>
@@ -131,19 +133,15 @@
 
                     <h1 class="h3 mb-3">Flight Tables </h1>
                     <div class="slidecontainer">
-                        <input type="range" min="0" max="6" value="0" class="slider" id="inputSlider">
-                        <p>Days: <span id="outputSlider"></span></p>
+                        <input type="range" min="0" max="3" value="0" class="slider" id="inputSlider">
+                        <p>Dates: <span id="outputSlider"></span></p>
                     </div>
                     <div class="row">
 
-                        <div class="col-12 col-xl-6">
-                            <div class="card">
+                        <div class="col-12 col-xl-6 forArLoader">
+                            <div class="card Arrival_card" style="display:none">
                                 <div class="card-header">
                                     <h1><img src="https://image.flaticon.com/icons/png/512/68/68542.png" width="50em" style="margin-right: 0.5em;">Arrivals:</h1>
-                                    <div class="slidecontainer">
-                                        <input type="range" min="0" max="23" value="12" class="slider" id="myRange1">
-                                        <p>Time: <span id="demo1"></span></p>
-                                    </div>
                                 </div>
                                 <table class="table table-striped table-hover">
                                     <thead>
@@ -214,14 +212,10 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-12 col-xl-6">
-                            <div class="card">
+                        <div class="col-12 col-xl-6 forDepLoader">
+                            <div class="card Departure_card" style="display:none">
                                 <div class="card-header">
                                     <h1><img src="https://cdn.iconscout.com/icon/free/png-512/departure-1418564-1197846.png" width="50em" style="margin-right: 0.5em;">Departures:</h1>
-                                    <div class="slidecontainer">
-                                        <input type="range" min="0" max="23" value="12" class="slider" id="myRange2">
-                                        <p>Time: <span id="demo2"></span></p>
-                                    </div>
                                 </div>
                                 <table class="table table-striped table-hover">
                                     <thead>
@@ -236,19 +230,6 @@
                                         </tr>
                                     </thead>
                                     <tbody class="departures">
-                                        <tr>
-                                            <td>
-                                                <img src="https://www.countryflags.io/it/flat/64.png" alt="GR"> Rome (FCO)
-                                            </td>
-                                            <td><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Aegean_Airlines_Logo_2020.png" width="120em" alt="GR">
-                                                <br> Aegean Airlines
-                                            </td>
-                                            <td>A3 250</td>
-                                            <td>-</td>
-                                            <td>12/05/2021 12:00</td>
-                                            <td><span class="badge badge-success">Departed</span></td>
-                                            <td>B6</td>
-                                        </tr>
                                         <tr>
                                             <td>
                                                 <img src="https://www.countryflags.io/gr/flat/64.png" alt="GR"> Rodos (RHO)
@@ -299,22 +280,6 @@
         <!--<script src="js/vendor.js"></script>-->
         <script src="../js/app-webkit.js"></script>
         <script src="../js/flight_table.js"></script>
-        <script>
-            var slider1 = document.getElementById("myRange1");
-            var output1 = document.getElementById("demo1");
-            var slider2 = document.getElementById("myRange2");
-            var output2 = document.getElementById("demo2");
-            output1.innerHTML = slider1.value;
-            output2.innerHTML = slider2.value;
-
-            slider1.oninput = function() {
-                output1.innerHTML = this.value + ':00';
-            }
-
-            slider2.oninput = function() {
-                output2.innerHTML = this.value + ':00';
-            }
-        </script>
 
 </body>
 

@@ -27,10 +27,6 @@ var Network_PlannerSchema = new Schema({
         type: Number,
         default: 0
     },
-    plan_start: {
-        type: String,
-        default: "Plan start date"
-    },
     plan_expire: {
         type: String,
         default: "Plan end date"

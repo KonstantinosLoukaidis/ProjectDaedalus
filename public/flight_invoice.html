@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">
+
+    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+    <title>Invoice | AdminKit Demo</title>
+
+    <link href="/css/loader.css" rel="stylesheet">
+    <link href="/css/app-webkit.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index.html">
+                    <span class="align-middle">AdminKit</span>
+                </a>
+
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">
+                        Pages
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="index.html">
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-profile.html">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-settings.html">
+                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" href="pages-invoice.html">
+                            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Invoice</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-blank.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        Tools & Components
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#ui" data-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">UI Elements</span>
+                        </a>
+                        <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-alerts.html">Alerts</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-buttons.html">Buttons</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-cards.html">Cards</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-general.html">General</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-grid.html">Grid</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-modals.html">Modals</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="ui-typography.html">Typography</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="icons-feather.html">
+                            <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a href="#forms" data-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="align-middle" data-feather="check-circle"></i> <span class="align-middle">Forms</span>
+                        </a>
+                        <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                            <li class="sidebar-item"><a class="sidebar-link" href="forms-layouts.html">Form Layouts</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="forms-basic-inputs.html">Basic Inputs</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="tables-bootstrap.html">
+                            <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tables</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        Plugins & Addons
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="charts-chartjs.html">
+                            <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="maps-google.html">
+                            <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-cta">
+                    <div class="sidebar-cta-content">
+                        <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+                        <div class="mb-3 text-sm">
+                            Are you looking for more components?
+                        </div>
+                        <a href="https://adminkit.io/pricing" target="_blank" class="btn btn-outline-primary btn-block">Upgrade</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle d-flex">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+            </nav>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+
+                    <h1 class="h3 mb-3">Invoice</h1>
+
+                    <div class="row">
+                        <div class="col-12 forLoader">
+                            <div class="card invoiceCard" style="display: none;">
+                                <div class="card-body m-sm-3 m-md-5">
+                                    <div class="mb-4">
+                                        Hello <span id="airline-name"><strong></strong></span>,
+                                        <br /> This is the receipt for a payment of <span id="total-ammount"><strong></strong></span> (EUR) you are charged for using ATH - Athens International Airport (LGAV) "Eleftherios Venizelos" services.
+                                        <div style="text-align: right"><img src="https://upload.wikimedia.org/wikipedia/en/3/33/Athens_airport_logo.svg"></div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="text-muted">Payment No.</div>
+                                            <strong>741037024</strong>
+                                        </div>
+                                        <div class="col-md-6 text-md-right">
+                                            <div class="text-muted">Payment Date</div>
+                                            <strong>June 2, 2021 - 03:45 pm</strong>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4" />
+
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="text-muted">Client</div>
+                                            <strong>
+              Aegean Airlines
+            </strong>
+                                            <p>
+                                                ICAO: AEE <br> IATA: A3 <br> Flight: A3 625 <br> ATH --> CDG <br> Aircraft: Airbus A320
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 text-md-right">
+                                            <div class="text-muted">Payment To</div>
+                                            <strong>
+                Athens International Airport S.A.
+            </strong>
+                                            <p>
+                                                Spata <br> 19019 <br> GR <br>
+                                                <a href="#">
+					airport_info@aia.gr
+              </a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+
+                                        <p>
+                                            Flight A3 625 arrived at LGAV on 15 May 2021 at 17:43 and departed for LFPG on 15 May 2021 at 20:25 on an Airbus A320 aircraft carrying 182 passengers with reduced mobility charge on departure. Under the Regulations of the
+                                            <a href="http://www.ypa.gr/en/air-transport/charges/">Ministry of Infrastructure and Transport, Department of Civil Aviation Authority</a>; the following charges apply.
+                                        </p>
+
+                                    </div>
+
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>class</th>
+                                                <th>Quantity</th>
+                                                <th class="text-right">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Landing charge</td>
+                                                <td>M.T.O.W. (tons) 65 &lt; W ≤ 80 <br> Charges (Eur.) 88,83 <br> For the first 65 tons and 1,6434 per additional ton or fraction thereof</td>
+                                                <td>68 tons</td>
+                                                <td class="text-right">5778.88€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Parking charge </td>
+                                                <td>M.T.O.W. (tons) 50 &lt; W ≤ 100 <br> Charges (Eur.) W x Hours x 0,0344€ per hour of layover</td>
+                                                <td>3 hrs</td>
+                                                <td class="text-right">7.02€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Passengers with reduced mobility charge (PRM charge)</td>
+                                                <td>EUR 9.72 per departing passenger from Athens International Airport “El. Venizelos”.<br> Exemptions:
+                                                    <br> -Infants (passengers under the age of two)<br> -Direct transit passengers<br> -Crew members when traveling as passengers to resume service on an aircraft at another airport<br> -Passengers whose
+                                                    flight is interrupted due to an emergency, weather conditions or other event of force majeure<br>
+                                                </td>
+                                                <td>182 passengers</td>
+                                                <td class="text-right">1769.04€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Surcharges for landing</th>
+                                                <th class="text-right">+25%</th>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Surcharges for parking</th>
+                                                <th class="text-right">0%</th>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Total </th>
+                                                <th class="text-right">8999.66€</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="text-center">
+
+                                        <p class="text-sm">
+                                            <strong>Proudly Supported by:</strong> <br>
+                                            <img src="https://i.ibb.co/2ch3cVT/Screenshot-2.jpg" alt="Screenshot-2" border="0" height="80em">
+                                        </p>
+
+                                        <a href="#" class="btn btn-primary">
+            Print this receipt
+          </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-left">
+                            <p class="mb-0">
+                                <a href="index.html" class="text-muted"><strong>AdminKit Demo</strong></a> &copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-right">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Terms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- <script src="js/vendor.js"></script> -->
+    <script src="/js/app-webkit.js"></script>
+    <script src="/js/flight_invoice.js"></script>
+
+</body>
+
+</html>

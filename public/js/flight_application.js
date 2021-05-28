@@ -28,7 +28,7 @@ function getPendingData() {
                 newPlan.id = innercounter;
                 newPlan.innerHTML = `
                     <td>
-                        <img src=${pending_plan.airline.logoLink} width="48" height="48" class="rounded-circle mr-2" alt=${pending_plan.airline.name}> ${pending_plan.airline.name}
+                        <img src=${pending_plan.airline.logoLink} width="96" alt=${pending_plan.airline.name}> ${pending_plan.airline.name}
                     </td>
                     <td>${pending_plan.airport.iata}</td>
                     <td>ATH</td>
@@ -70,7 +70,7 @@ function getAcceptedData() {
                 acceptedTable.appendChild(acceptedPlan);
                 acceptedPlan.innerHTML = `
                     <td>
-                        <img src="${accepted_plan.airline.logoLink}" width="48" height="48" class="rounded-circle mr-2" alt=${accepted_plan.airline.name}> ${accepted_plan.airline.name}
+                        <img src="${accepted_plan.airline.logoLink}" width="96" height=auto alt=${accepted_plan.airline.name}> ${accepted_plan.airline.name}
                     </td>
                     <td>${accepted_plan.airport.iata}</td>
                     <td>ATH</td>
@@ -109,7 +109,7 @@ function getRejectedData() {
                 rejectedTable.appendChild(rejectedPlan);
                 rejectedPlan.innerHTML = `
                     <td>
-                        <img src="${rejected_plan.airline.logoLink}" width="48" height="48" class="rounded-circle mr-2" alt=${rejected_plan.airline.name}> ${rejected_plan.airline.name}
+                        <img src="${rejected_plan.airline.logoLink}" width="96" alt=${rejected_plan.airline.name}> ${rejected_plan.airline.name}
                     </td>
                     <td>${rejected_plan.airport.iata}</td>
                     <td>ATH</td>
