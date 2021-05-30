@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function getPendingData() {
-    fetch('http://localhost:3000/admin-logged/flight_applications/getPendingData')
+    fetch('/getPendingData')
         .then(req => req.json())
         .then(res => {
             let innercounter = 0;
@@ -56,7 +56,7 @@ function getPendingData() {
 }
 
 function getAcceptedData() {
-    fetch('http://localhost:3000/admin-logged/flight_applications/getAcceptedData')
+    fetch(window.location.href + '/getAcceptedData')
         .then(req => req.json())
         .then(res => {
             let colour
@@ -94,7 +94,7 @@ function getAcceptedData() {
 }
 
 function getRejectedData() {
-    fetch('http://localhost:3000/admin-logged/flight_applications/getRejectedData')
+    fetch(window.location.href + '/getRejectedData')
         .then(req => req.json())
         .then(res => {
             document.querySelector('.loader').remove();
@@ -134,7 +134,7 @@ function getRejectedData() {
 }
 
 function changeApprove(plan_id, action, prev_status) {
-    fetch('http://localhost:3000/admin-logged/flight_applications', {
+    fetch(window.location.href + 'flight_applications', {
             method: 'PUT',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             body: JSON.stringify({

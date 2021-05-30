@@ -20,7 +20,7 @@ let ac_selected = document.querySelector('.ac_man').addEventListener('click', (e
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetch('http://localhost:3000/network_planning/ac_man_find')
+    fetch(window.location.href + '/ac_man_find')
         .then(req => req.json())
         .then(res => {
             let ac_selected = document.querySelector('.ac_man');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function ac_models(manufacturer) {
-    fetch('http://localhost:3000/network_planning/ac_model_find?key=' + manufacturer)
+    fetch(window.location.href + '/ac_model_find?key=' + manufacturer)
         .then(req => req.json())
         .then(res => {
             let ac_selected = document.querySelector('.ac_model');

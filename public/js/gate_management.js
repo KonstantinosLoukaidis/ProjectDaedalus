@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 })
 
 function getGates() {
-    fetch('http://localhost:3000/admin-logged/gate_management/used_gates')
+    fetch(window.location.href + "/used_gates")
         .then(req => req.json())
         .then(res => {
             var loader = document.querySelector('.loader').remove();
