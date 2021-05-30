@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function getPendingData() {
-    fetch('/getPendingData')
+    fetch(window.location.href + '/getPendingData')
         .then(req => req.json())
         .then(res => {
             let innercounter = 0;

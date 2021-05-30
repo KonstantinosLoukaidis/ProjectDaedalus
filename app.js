@@ -64,7 +64,7 @@ app.use(flash());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/network_planning', network_planningRouter);
-app.use('/flight_table', flight_tableRouter);
+// app.use('/flight_table', flight_tableRouter);
 
 function auth(req, res, next) {
     if (!req.user) {
