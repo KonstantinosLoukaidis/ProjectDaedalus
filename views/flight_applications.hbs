@@ -13,103 +13,17 @@
 
     <title>Flight Applications | Project Daedalus</title>
 
-    <link href="../css/app-webkit.css" rel="stylesheet">
-    <link herf="../css/flight-application.css" rel="stylesheet">
-    <link href="../css/loader.css" rel="stylesheet">
-    <script type="text/javascript" src="../functions_js/logout.js"></script>
+    <link href="/css/app-webkit.css" rel="stylesheet">
+    <link herf="/css/flight-application.css" rel="stylesheet">
+    <link href="/css/loader.css" rel="stylesheet">
+    <script type="text/javascript" src="/functions_js/logout.js"></script>
 </head>
 
 <body>
     <div class="wrapper">
-        <nav id="sidebar" class="sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="/">
-                    <span class="align-middle">Project Daedalus</span>
-                </a>
-
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Pages
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/admin-logged">
-                            <i class="align-middle" data-feather="menu"></i> <span class="align-middle">Admin menu</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/admin-logged/gate_management">
-                            <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Gate management</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="/admin-logged/flight_applications">
-                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Flight applications</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="">
-                            <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Analytics</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/admin-logged/flight_table">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="icons-feather.html">
-                            <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a href="#forms" data-toggle="collapse" class="sidebar-link collapsed">
-                            <i class="align-middle" data-feather="check-circle"></i> <span class="align-middle">Forms</span>
-                        </a>
-                        <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="forms-layouts.html">Form Layouts</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="forms-basic-inputs.html">Basic Inputs</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="tables-bootstrap.html">
-                            <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tables</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-header">
-                        Plugins & Addons
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="charts-chartjs.html">
-                            <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-header">
-                        Admin account
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" onclick="logoutUser()">
-                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        {{> sidebar}}
         <div class="main">
+            {{> sidebar-toggle}}
             <main class="content">
                 <div class="container-fluid p-0 for-loader">
                     <h1 class="h3 mb-3">Network Planning Applications</h1>
@@ -185,8 +99,8 @@
     </div>
 
     <!-- <script src="js/vendor.js"></script> -->
-    <script src="../js/app-webkit.js"></script>
-    <script src="../js/flight_application.js"></script>
+    <script src="/js/app-webkit.js"></script>
+    <script src="/js/flight_application.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
 
 </body>

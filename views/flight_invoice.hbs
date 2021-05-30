@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">
+
+    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+    <title>Invoice | AdminKit Demo</title>
+
+    <link href="/css/loader.css" rel="stylesheet">
+    <link href="/css/app-webkit.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        {{> sidebar}}
+
+        <div class="main">
+            {{>sidebar-toggle}}
+
+            <main class="content">
+                
+                <div class="container-fluid p-0">
+
+                    <h1 class="h3 mb-3">Invoice</h1>
+
+                    <div class="row">
+                        <div class="col-12 forLoader">
+                            <div class="card invoiceCard" style="display: none;">
+                                <div class="card-body m-sm-3 m-md-5">
+                                    <div class="mb-4">
+                                        Hello <strong><span id="airline-name"></span></strong>,
+                                        <br /> This is the receipt for a payment of <strong><span id="total-ammount"></span></strong> (EUR) you are charged for using ATH - Athens International Airport (LGAV) "Eleftherios Venizelos" services.
+                                        <div style="text-align: right"><img src="https://upload.wikimedia.org/wikipedia/en/3/33/Athens_airport_logo.svg"></div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="text-muted">Payment No.</div>
+                                            <strong><span id="inv_num">741037024</span></strong>
+                                        </div>
+                                        <div class="col-md-6 text-md-right">
+                                            <div class="text-muted">Payment Date</div>
+                                            <strong><span id="payment-date">June 2, 2021 - 03:45 pm</span></strong>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4" />
+
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="text-muted client">Client</div>
+                                            <strong>
+              Aegean Airlines
+            </strong>
+                                            <p>
+                                                ICAO: AEE <br> IATA: A3 <br> Flight: A3 625 <br> ATH --> CDG <br> Aircraft: Airbus A320
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 text-md-right">
+                                            <div class="text-muted">Payment To</div>
+                                            <strong>
+                Athens International Airport S.A.
+            </strong>
+                                            <p>
+                                                Spata <br> 19019 <br> GR <br>
+                                                <a href="#">
+					airport_info@aia.gr
+              </a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+
+                                        <p>
+                                            Flight <span id="flight_number1"></span> is scheduled to arrive at LGAV on <span id="arrival-date1"></span> and to depart for <span id="airport-iaco1"></span> on <span id="departure-date1"></span> on an
+                                            <span id="airbus_passengers1"></span> with reduced mobility charge on departure. Under the Regulations of the
+                                            <a href="http://www.ypa.gr/en/air-transport/charges/">Ministry of Infrastructure and Transport, Department of Civil Aviation Authority</a>; the following charges apply.
+                                        </p>
+
+                                    </div>
+
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>class</th>
+                                                <th>Quantity</th>
+                                                <th class="text-right">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Landing charge</td>
+                                                <td class="mtowmsg">M.T.O.W. (tons) 65 &lt; W ≤ 80 <br> Charges (Eur.) 88,83 <br> For the first 65 tons and 1,6434 per additional ton or fraction thereof</td>
+                                                <td id="raw_mtow">68 tons</td>
+                                                <td class="text-right" id="landing_charge">5778.88€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Parking charge </td>
+                                                <td class="mtowmsg2">M.T.O.W. (tons) 50 &lt; W ≤ 100 <br> Charges (Eur.) W x Hours x 0,0344€ per hour of layover</td>
+                                                <td id="hours_parking">3 hrs</td>
+                                                <td class="text-right" id="parking_charge">7.02€</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Passengers with reduced mobility charge (PRM charge)</td>
+                                                <td>EUR 9.72 per departing passenger from Athens International Airport “El. Venizelos”.<br> Exemptions:
+                                                    <br> -Infants (passengers under the age of two)<br> -Direct transit passengers<br> -Crew members when traveling as passengers to resume service on an aircraft at another airport<br> -Passengers whose
+                                                    flight is interrupted due to an emergency, weather conditions or other event of force majeure<br>
+                                                </td>
+                                                <td id="total_passengers">182 passengers</td>
+                                                <td class="text-right" id="prm_charges">1769.04€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Surcharges for landing</th>
+                                                <th class="text-right" id="landing_surcharges">+25%</th>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Surcharges for parking</th>
+                                                <th class="text-right" id="parking_surcharges">0%</th>
+                                            </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Total </th>
+                                                <th class="text-right" id="total-ammount2">8999.66€</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="text-center">
+
+                                        <p class="text-sm">
+                                            <strong>Proudly Supported by:</strong> <br>
+                                            <img src="https://i.ibb.co/2ch3cVT/Screenshot-2.jpg" alt="Screenshot-2" border="0" height="80em">
+                                        </p>
+
+                                        <a href="#" class="btn btn-primary">Download this invoice</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- <script src="js/vendor.js"></script> -->
+    <script src="/js/app-webkit.js"></script>
+    <script src="/js/flight_invoice.js"></script>
+
+</body>
+
+</html>

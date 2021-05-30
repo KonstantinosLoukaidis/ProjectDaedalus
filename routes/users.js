@@ -24,22 +24,41 @@ router.post('/signup', (req, res, next) => {
         });
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json({ success: true, status: 'You are successfully logged in!', username: req.body.username });
-});
+
+router.get('/login', (req, res) => {
+    res.redirect('/')
+})
+
+router.get('/loginSuccessful', (req, res) => {
+    res.redirect('/')
+})
+
+router.get('/loginFailed', (req, res) => {
+    res.redirect('/')
+})
+
+router.post('/login',
+    passport.authenticate('local', {
+        failureRedirect: '/users/loginFailed',
+        failureFlash: true
+    }), (req, res) => {
+        res.redirect('/users/loginSuccessful')
+    }
+);
 
 router.get('/logout', (req, res) => {
     if (req.session) {
-        req.session.destroy();
-        res.clearCookie('session-id');
-        res.redirect('/');
+        req.logout()
+        req.session.destroy(function(err) {
+            res.clearCookie('session-id')
+            res.redirect('/');
+        });
     } else {
         var err = new Error('You are not logged in!');
         err.status = 403;
         next(err);
     }
 });
+
 
 module.exports = router;

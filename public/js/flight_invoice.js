@@ -6,14 +6,84 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetch(window.location.href + '/getInvoiceData')
         .then((req) => req.json())
         .then((res) => {
-            console.log(res[0]);
             var data = res[0];
             var airline = data.gate_dispatcher.network_plan.airline;
             var airport = data.gate_dispatcher.network_plan.airport;
             var aircraft = data.gate_dispatcher.network_plan.aircraft;
-            document.getElementById('airline-name').innerHTML = airline.name;
-            document.getElementById('total-ammount').innerHTML = data.total_ammount + "€"
+            var arr_date = new Date(data.flight_arrival)
+            var dep_date = new Date(data.flight_departure)
+            var exp_date = new Date(data.expected_arrival)
+            var timeDiffinHours = Math.ceil((dep_date.getTime() - arr_date.getTime()) / (1000 * 60 * 60))
+            var MTOW = aircraft.MTOW.split(',').slice(0, 2).join('.')
+            document.getElementById('airline-name').innerText = airline.name;
+            document.getElementById('total-ammount').innerText = data.total_ammount + "€"
+            document.getElementById('total-ammount2').innerText = data.total_ammount + "€"
+            document.getElementById('payment-date').innerText = arr_date.toLocaleString()
+            document.getElementById('inv_num').innerText = generateInvNo(data._id)
+            document.querySelector('.client').innerHTML = `
+            <strong>
+                ${airline.name}
+            </strong>
+            <p>
+                ICAO: ${airline.ICAO} <br> IATA: ${airline.IATA} <br> Flight: ${data.gate_dispatcher.flight_number} <br> ATH --> ${airport.iata} <br> Aircraft: ${aircraft.Manufacturer +" "+aircraft.Model}
+            </p>`
+            document.getElementById('flight_number1').innerText = data.gate_dispatcher.flight_number;
+            document.getElementById('arrival-date1').innerText = exp_date.toLocaleString();
+            document.getElementById('departure-date1').innerText = dep_date.toLocaleString();
+            document.getElementById('airport-iaco1').innerText = airport.icao;
+            document.getElementById('airbus_passengers1').innerHTML = `${aircraft.Manufacturer+" "+aircraft.Model} aircraft carrying ${data.passengers} passengers`
+            document.getElementById('raw_mtow').innerText = MTOW + " tons"
+            document.getElementById('landing_charge').innerText = data.landing_charge + " €"
+            document.querySelector(".mtowmsg").innerHTML = getMTOWMsg(Number(MTOW))
+            document.getElementById('hours_parking').innerText = timeDiffinHours + " hrs"
+            document.getElementById('parking_charge').innerText = data.parking_charge + " €"
+            document.querySelector(".mtowmsg2").innerHTML = getTimeMTOWMsg(Number(MTOW))
+            document.getElementById('total_passengers').innerText = data.passengers + " passengers";
+            document.getElementById('prm_charges').innerText = data.passengers_charges + " €";
+            document.getElementById('landing_surcharges').innerText = surcharges(data.landing_surcharges);
+            document.getElementById('parking_surcharges').innerText = surcharges(data.parking_surcharges);
             forLoader.removeChild(loader)
             document.querySelector('.invoiceCard').style.display = "block"
         })
 })
+
+function surcharges(sur) {
+    if (sur > 0) return "+" + sur * 100 + "%"
+    else if (sur == 0) return sur * 100 + "%"
+    else return "-" + sur * 100 + "%"
+}
+
+function getMTOWMsg(MTOW) {
+    let mtowmsg = [];
+    if (MTOW <= 10) mtowmsg = ["W≤10", 11.5, ""]
+    else if (MTOW > 10 && MTOW <= 25) mtowmsg = ["10&lt;W≤25", "11,50", "25 tons and 1.1455"]
+    else if (MTOW > 25 && MTOW <= 50) mtowmsg = ["25&lt;W≤50", "28,67", "25 tons and 1,438"]
+    else if (MTOW > 50 && MTOW <= 65) mtowmsg = ["50&lt;W≤65", "64,62", "50 tons and 1,6141"]
+    else if (MTOW > 65 && MTOW <= 80) mtowmsg = ["65&lt;W≤80", "88,83", "65 tons and 1,6434"]
+    else if (MTOW > 80 && MTOW <= 150) mtowmsg = ["80&lt;W≤150", "113,48", "80 tons and 1,6141"]
+    else if (MTOW > 150 && MTOW <= 300) mtowmsg = ["150&lt;W≤300", "226,47", "150 tons and 1,6434"]
+    else mtowmsg = ["W&gt;300", "472,99", "300 tons and  1,2913"]
+    return `M.T.O.W. (tons) ${mtowmsg[0]}<br>Charges (Eur.) ${mtowmsg[1]}<br>For the first ${mtowmsg[2]}€ per additional ton or fraction thereof`
+}
+
+function getTimeMTOWMsg(MTOW) {
+    let parkingmsg = [];
+    if (MTOW <= 10) parkingmsg = ["10&lt;W", "", "0,0344"]
+    else if (MTOW > 10 && MTOW <= 50) parkingmsg = ["10&lt;W≤50", "W x T x", "0,0275"]
+    else if (MTOW > 50 && MTOW <= 100) parkingmsg = ["50&lt;W≤100", "W x T x", "0,0344"]
+    else if (MTOW > 100 && MTOW <= 200) parkingmsg = ["100&lt;W≤200", "W x T x", "0,0412"]
+    else parkingmsg = ["&gt;200", "W x T x", "0,0481"]
+    return `M.T.O.W. (tons) ${parkingmsg[0]}<br>Charges (Eur.) ${parkingmsg[1]} ${parkingmsg[2]}€ per hour of layover`
+}
+
+function generateInvNo(id) {
+    var invno = "";
+    for (let i = 0, counter = 0; i < id.length; i++) {
+        if (id.slice(-(i + 1), -i).match(/[0-9]/i) != null) {
+            invno += id.slice(-(i + 1), -i)
+            counter++;
+        }
+        if (counter == 7) break
+    }
+    return invno
+}

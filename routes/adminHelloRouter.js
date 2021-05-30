@@ -9,7 +9,7 @@ adminHelloRouter.use(bodyParser.json());
 
 adminHelloRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('hello_admin.html', { root: path.join(__dirname, '../public') });
+        res.render('hello_admin');
     });
 
 module.exports = adminHelloRouter;

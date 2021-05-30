@@ -17,7 +17,7 @@ flight_tableRouter.use(bodyParser.json());
 
 flight_tableRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('flight_Table.html', { root: path.join(__dirname, '../public') });
+        res.render('flight_Table');
     })
 
 const daysParser = Object({

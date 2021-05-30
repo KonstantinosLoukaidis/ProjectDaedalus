@@ -18,6 +18,7 @@ var FlightSchema = new Schema({
     flight_arrival: String,
     expected_arrival: String,
     flight_departure: String,
+    expected_departure: String,
     passed: false
 }, {
     timestamps: true

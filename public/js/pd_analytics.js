@@ -3,6 +3,8 @@ var index = [];
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var tableData = [];
 
+document.querySelector('.aa').classList += " active"
+
 document.addEventListener('DOMContentLoaded', () => {
     new Promise((resolve, rej) => {
             fetch(window.location.href + '/getAnalyticsData')

@@ -13,6 +13,8 @@ const daysParser = Object({
 })
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+document.querySelector('.aft').classList += " active"
+
 function getrawDate(wanted_days) {
     const wanted_date = new Date(Date.now());
     wanted_date.setDate(wanted_date.getDate() + wanted_days);

@@ -23,7 +23,7 @@ var lock = new ReadWriteLock();
 
 analyticsRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('analytics.html', { root: path.join(__dirname, '../public') });
+        res.render('analytics');
     });
 
 analyticsRouter.route('/getAnalyticsData')
@@ -80,7 +80,7 @@ analyticsRouter.route('/getConnectedAirports')
 
 analyticsRouter.route('/:id')
     .get((req, res, next) => {
-        res.sendFile('flight_invoice.html', { root: path.join(__dirname, '../public') });
+        res.render('flight_invoice');
     })
 
 analyticsRouter.route('/:id/getInvoiceData')

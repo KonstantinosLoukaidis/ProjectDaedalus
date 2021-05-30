@@ -11,18 +11,22 @@
 </head>
 
 <body>
-
+    {{#if expressFlash.error}}
+        <p>{{ expressFlash.error }}</p>
+    {{/if}}
     <div class="topnav">
         <a class="active" href="/">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
         <a href='network_planning'>For enterprises</a>
         <a id='x' href="/">About</a>
-        <div class="authentication">
-            <a id="login">Login</a>
-            <a id="logged"></a>
-        </div>
-
+        {{#if logged}}
+            <div class="authentication">
+                <a id="logged" href="/admin-logged">Hello {{username}}</a>
+            </div>
+        {{else}}
+            <div class="authentication">
+                <a id="login">Login</a>
+            </div>
+        {{/if}}
     </div>
 
     <div class="video-container" style="overflow: auto;">
@@ -87,14 +91,9 @@
                 <label>
             </label>
             </div>
-
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('loginForm').style.display='none'" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
-            </div>
         </form>
     </div>
-    <script src="js/index.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

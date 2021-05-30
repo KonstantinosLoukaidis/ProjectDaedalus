@@ -9,6 +9,8 @@ var FileStore = require('session-file-store')(session);
 var passport = require('passport');
 var authenticate = require('./authenticate');
 var config = require('./config');
+var exphbs = require('express-handlebars');
+var flash = require('express-flash');
 
 const Network_Planner = require('./models/network_planner');
 const Airlines = require('./models/airlines');
@@ -35,8 +37,11 @@ connect.then((db) => {
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+app.engine('hbs', exphbs({
+    extname: '.hbs'
+}));
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -48,12 +53,13 @@ app.use(session({
     name: 'session-id',
     secret: config.secretKey,
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     store: new FileStore()
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

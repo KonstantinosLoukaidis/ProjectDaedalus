@@ -3,6 +3,8 @@ const acceptedTable = document.querySelector('.accepted-table');
 const rejectedTable = document.querySelector('.rejected-table');
 const forLoader = document.querySelector('.for-loader');
 
+document.querySelector('.afa').classList += " active"
+
 document.addEventListener('DOMContentLoaded', (event) => {
     var loader = document.createElement('div');
     loader.classList = `loader`;

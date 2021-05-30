@@ -25,7 +25,7 @@ const daysParser = Object({
 
 network_planningRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('network_planning.html', { root: path.join(__dirname, '../public') });
+        res.render('network_planning');
     })
     .post((req, res, next) => {
         console.log(req.body);

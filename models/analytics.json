@@ -1,11 +1,11 @@
 {
   "totals": {
-    "earnings": 150182.6,
-    "parking_fees": 1396.5700000000002,
-    "landing_charges": 142903.88,
-    "prm_charges": 4160.16,
-    "passengers": 428,
-    "flights": 4
+    "earnings": 435975.00999999995,
+    "parking_fees": 2405.4900000000007,
+    "landing_charges": 421962.31,
+    "prm_charges": 9885.24,
+    "passengers": 1017,
+    "flights": 12
   },
   "January": {
     "earnings": 241242,
@@ -40,20 +40,20 @@
     "flights": 0
   },
   "May": {
-    "earnings": 50182.38,
-    "parking_fees": 319.68,
-    "landing_charges": 47685.42,
-    "prm_charges": 2177.28,
-    "passengers": 224,
-    "flights": 2
+    "earnings": 238660.01,
+    "parking_fees": 797.5999999999999,
+    "landing_charges": 231515.24999999997,
+    "prm_charges": 6347.160000000001,
+    "passengers": 653,
+    "flights": 8
   },
   "June": {
-    "earnings": 98278.22,
-    "parking_fees": 1076.89,
-    "landing_charges": 95218.46,
-    "prm_charges": 1982.88,
-    "passengers": 204,
-    "flights": 2
+    "earnings": 195593,
+    "parking_fees": 1607.89,
+    "landing_charges": 190447.06,
+    "prm_charges": 3538.08,
+    "passengers": 364,
+    "flights": 4
   },
   "July": {
     "earnings": 0,

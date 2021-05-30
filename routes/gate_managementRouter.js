@@ -17,7 +17,7 @@ module.exports = gate_managementRouter;
 
 gate_managementRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('gate_management.html', { root: path.join(__dirname, '../public') });
+        res.render('gate_management');
     });
 
 gate_managementRouter.route('/used_gates')

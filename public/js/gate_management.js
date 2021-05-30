@@ -11,6 +11,8 @@ const daysParser = Object({
     "Sunday": 0
 })
 
+document.querySelector('.agm').classList += " active"
+
 document.addEventListener('DOMContentLoaded', (event) => {
     //the event occurred
     var loader = document.createElement('div');

@@ -18,7 +18,7 @@ flight_applicationRouter.use(bodyParser.json());
 
 flight_applicationRouter.route('/')
     .get((req, res, next) => {
-        res.sendFile('flight_applications.html', { root: path.join(__dirname, '../public') });
+        res.render('flight_applications')
     })
     .put((req, res, next) => {
         if (req.body.action == 1) {
@@ -103,7 +103,7 @@ flight_applicationRouter.route('/getRejectedData')
 
 flight_applicationRouter.route('/:id')
     .get((req, res, next) => {
-        res.sendFile('flight_profile.html', { root: path.join(__dirname, '../public') });
+        res.render('flight_profile');
     })
 
 flight_applicationRouter.route('/:id/getAllPlans')
@@ -229,7 +229,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
-function delay_generator() {
+function delay_generator(use) {
 
     //possibilities of delay 10%
     let p = getRandomInt(0, 9);
@@ -241,9 +241,11 @@ function delay_generator() {
         //delay in minutes
         delay = getRandomInt(15, 180);
 
-    } else {
+    } else if (use == 1) {
         //non significant delay
         delay = getRandomInt(-15, 14);
+    } else if (use == 2) {
+        delay = getRandomInt(0, 14);
     }
 
     //return expected time difference in minutes
@@ -275,6 +277,7 @@ function allocateFlight(gatedispatchedId, planId) {
                     flight_arrival: null,
                     expected_arrival: null,
                     flight_departure: null,
+                    expected_departure: null,
                     passed: false
                 }
                 let promise = new Promise((res, rej) => {
@@ -292,14 +295,17 @@ function allocateFlight(gatedispatchedId, planId) {
                     let deptimes = data.ar_dep.departure_time.split(':')
                     let ardate = new Date(date)
                     ardate.setHours(artimes[0], artimes[1], 0) //for flight to be unique
-                    let expdate = new Date(ardate.getTime() + delay_generator() * 60000);
+                    let expdate = new Date(ardate.getTime() + delay_generator(1) * 60000);
                     let atz = ardate.getTimezoneOffset() * 60000;
                     let etz = expdate.getTimezoneOffset() * 60000;
                     dataToSend.flight_arrival = (new Date(ardate - atz)).toISOString()
                     let depdate = getNextDate(ardate, daysParser[String(data.ar_dep.departure_day)]);
+                    let expddate = new Date(dep.getTime() + delay_generator(2) * 60000)
+                    let edtz = expddate.getTimezoneOffset() * 60000;
                     depdate.setHours(deptimes[0], deptimes[1], 0)
                     let dtz = depdate.getTimezoneOffset() * 60000;
                     dataToSend.flight_departure = (new Date(depdate - dtz)).toISOString()
+                    dataToSend.expected_departure = (new Date(expddate - edtz)).toISOString()
                     dataToSend.expected_arrival = (new Date(expdate - etz)).toISOString()
                     let newFlight = new Flight(dataToSend)
                     newFlight.save((err) => {
@@ -387,8 +393,8 @@ function generateFlightNumber(IATA, id) {
     id = String(id)
     flight_number = IATA + " ";
     for (let i = 1, counter = 0; i < id.length; i++) {
-        if (id.slice(-(i + 1), -i).match(/[a-z]/i) != null) {
-            flight_number += id.slice(-(i + 1), -i).toUpperCase()
+        if (id.slice(-(i + 1), -i).match(/[0-9]/i) != null) {
+            flight_number += id.slice(-(i + 1), -i)
             counter++
         }
         if (counter == 3) break
