@@ -3,7 +3,7 @@ document.querySelectorAll('.airline').forEach((item) => {
         if (e.keyCode === 13) {
             e.preventDefault();
             var info = e.target.value;
-            fetch('http://localhost:3000/network_planning/retrieve_airlines?key=' + info)
+            fetch(window.location.href + '/retrieve_airlines?key=' + info)
                 .then(req => req.json())
                 .then(res => {
                     if (res.length == 0 && info === "") {
@@ -27,7 +27,7 @@ document.querySelectorAll('.airport').forEach((item) => {
         if (e.keyCode === 13) {
             e.preventDefault();
             var info = e.target.value;
-            fetch('http://localhost:3000/network_planning/retrieve_airports?key=' + info)
+            fetch(window.location.href + '/retrieve_airports?key=' + info)
                 .then(req => req.json())
                 .then(res => {
                     if (res.length == 0 && info === "") {
