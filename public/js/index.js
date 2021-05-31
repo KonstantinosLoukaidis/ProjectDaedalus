@@ -39,8 +39,6 @@ function handleSubmit(event) {
             modal.style.display = "none";
         })
         .catch((error) => {
-            alert("The username or password is wrong");
-            document.getElementById('enterpsw').value = "";
             console.error('Error:', error);
         });
 }
