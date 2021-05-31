@@ -8,6 +8,7 @@ const Airlines = require('../models/airlines');
 const Airports = require('../models/airports');
 const GateDispatcher = require('../models/gateDispatcher');
 const Gates = require('../models/gates');
+const Flight = require('../models/flight');
 
 const gate_managementRouter = express.Router();
 
@@ -23,26 +24,41 @@ gate_managementRouter.route('/')
 gate_managementRouter.route('/used_gates')
     .get((req, res, next) => {
         var info = req.query.key;
-        GateDispatcher.find({})
+        Flight.find({})
+            .populate('gate_dispatcher')
             .populate({
-                path: 'network_plan',
+                path: 'gate_dispatcher',
                 populate: {
-                    path: 'airline',
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airline'
+                    }
                 }
             })
             .populate({
-                path: 'network_plan',
+                path: 'gate_dispatcher',
                 populate: {
-                    path: 'airport'
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airport'
+                    }
                 }
             })
             .populate({
-                path: 'network_plan',
+                path: 'gate_dispatcher',
                 populate: {
-                    path: 'aircraft'
+                    path: 'network_plan',
+                    populate: {
+                        path: 'aircraft'
+                    }
                 }
             })
-            .populate('gate')
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'gate'
+                }
+            })
             .exec((err, data) => {
                 if (err) throw err;
                 else if (!data) res.send(null);

@@ -3,8 +3,8 @@ let add_more = document.querySelector('.bi').addEventListener('click', () => {
     let add_dep = document.querySelector('.dep_add');
     let new_arrival = document.createElement('li');
     let new_dep = document.createElement('li');
-    new_arrival.innerHTML = '<select class="w3-select w3-border" id="arr_day" name="arr_day"><option value="monday">Monday</option><option value="tuesday">Tuesday</option> <option value="wednesday">Wednesday</option> <option value="thursday">Thursday</option> <option value="friday">Friday</option><option value="saturday">Saturday</option> <option value="sunday">Sunday</option></select><label for="arr_day"> Arrival at:</label><input type="time" id="arr_time" value="00:00" name="arrival_time"><small>time must be in GMT-2</small>';
-    new_dep.innerHTML = '<select class="w3-select w3-border" id="dep_day" name="dep_day"><option value="monday">Monday</option><option value="tuesday">Tuesday</option> <option value="wednesday">Wednesday</option> <option value="thursday">Thursday</option> <option value="friday">Friday</option><option value="saturday">Saturday</option> <option value="sunday">Sunday</option></select><label for="dep_day"> Arrival at:</label><input type="time" id="dep_time" value="00:00" name="dep_time"><small>time must be in GMT-2</small>';
+    new_arrival.innerHTML = '<select class="w3-select w3-border" id="arr_day" name="arr_day"><option value="Monday">Monday</option><option value="Tuesday">Tuesday</option> <option value="Wednesday">Wednesday</option> <option value="Thursday">Thursday</option> <option value="Friday">Friday</option><option value="Saturday">Saturday</option> <option value="Sunday">Sunday</option></select><label for="arr_day"> Arrival at:</label><input type="time" id="arr_time" value="00:00" name="arrival_time"><small>time must be in GMT-2</small>';
+    new_dep.innerHTML = '<select class="w3-select w3-border" id="dep_day" name="dep_day"><option value="Monday">Monday</option><option value="Tuesday">Tuesday</option> <option value="Wednesday">Wednesday</option> <option value="Thursday">Thursday</option> <option value="Friday">Friday</option><option value="Saturday">Saturday</option> <option value="Sunday">Sunday</option></select><label for="dep_day"> Arrival at:</label><input type="time" id="dep_time" value="00:00" name="dep_time"><small>time must be in GMT-2</small>';
     add_arrival.appendChild(new_arrival);
     add_dep.appendChild(new_dep);
 
@@ -48,3 +48,5 @@ function ac_models(manufacturer) {
         })
         .catch(err => console.log(err));
 }
+
+document.getElementById('form').classList = 'active'

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     loader1.classList = `loader`;
     loader2.classList = `loader`;
     ArLoader.appendChild(loader1);
-    DepLoader.appendChild(loader2)
+    DepLoader.appendChild(loader2);
     fetch(window.location.href + '/getArrivals')
         .then((req) => req.json())
         .then((res) => {
@@ -59,8 +59,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <td><img src=${flight.gate_dispatcher.network_plan.airline.logoLink} width="120em">
                         <br> ${flight.gate_dispatcher.network_plan.airline.name}
                     </td>
-                    <td>${flight.gate_dispatcher.flight_number}</td>
-                    <td>${("0" + temp_expected.getDate()).slice(-2)+"/"+("0" + (temp_expected.getMonth()+1)).slice(-2)+"/"+("0" + temp_expected.getYear()).slice(-2)+" "+("0" + temp_expected.getHours()).slice(-2)+":"+("0" + temp_expected.getMinutes()).slice(-2)}</td>
+                    <td>${flight.gate_dispatcher.flight_number}</td>` + expectTheUnexpected(temp_expected, flightStatus) + `
                     <td>${("0" + temp_date.getDate()).slice(-2)+"/"+("0" + (temp_date.getMonth()+1)).slice(-2)+"/"+("0" + temp_date.getYear()).slice(-2)+" "+("0" + temp_date.getHours()).slice(-2)+":"+("0" + temp_date.getMinutes()).slice(-2)}</td>
                     <td><span class="badge badge-success ${flightStatus[0]}">${flightStatus[1]}</span></td>
                     <td>${flight.gate_dispatcher.gate.Name}</td>`)
@@ -79,6 +78,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     let tz = (new Date()).getTimezoneOffset() * 60000;
                     tz = Math.abs(tz)
                     let temp_date = new Date((new Date(flight.flight_departure)) - tz)
+                        //let temp_expected = new Date((new Date(flight.expected_departure)) - tz)
                     let flightStatus = flightStatusDeparture(temp_date).split('/');
                     tableDepartureData[`${temp_date.getDay()}`].push(`
                     <td>
@@ -101,6 +101,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .catch((err) => console.log(err))
 
 })
+
+function expectTheUnexpected(temp_expected, flight_status) {
+    if (flight_status[0] != "S2")
+        return `<td>${("0" + temp_expected.getDate()).slice(-2)+"/"+("0" + (temp_expected.getMonth()+1)).slice(-2)+"/"+("0" + temp_expected.getYear()).slice(-2)+" "+("0" + temp_expected.getHours()).slice(-2)+":"+("0" + temp_expected.getMinutes()).slice(-2)}</td>`
+    else {
+        return `<td></td>`
+    }
+}
 
 function loadDaySlider() {
     var sliderDays = getTableDates();

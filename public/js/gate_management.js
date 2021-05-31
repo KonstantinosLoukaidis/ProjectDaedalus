@@ -1,15 +1,15 @@
 let gate_used = 1;
 let gm_pending = document.querySelector('.gm_pending');
 let gm_management = document.querySelector('.gate-management');
-const daysParser = Object({
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-    "Saturday": 6,
-    "Sunday": 0
-})
+const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
 
 document.querySelector('.agm').classList += " active"
 
@@ -22,114 +22,137 @@ document.addEventListener('DOMContentLoaded', (event) => {
     setTimeout(() => { getGates() }, 100);
 })
 
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
 function getGates() {
     fetch(window.location.href + "/used_gates")
         .then(req => req.json())
         .then(res => {
             var loader = document.querySelector('.loader').remove();
-            for (gate of res) {
-                let tempDate = new Date()
-                let arrival_day = getBackDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]);
-                let arrival_time = gate.network_plan.ar_dep.arrival_time.split(":");
-                arrival_day.setHours(arrival_time[0], arrival_time[1], 0);
-                console.log(arrival_day)
-                if (arrival_day < tempDate) {
-                    var new_gm = document.createElement('div');
-                    new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
-                    gate_used += 1;
-                    gm_pending.appendChild(new_gm);
-                    let wanted_date = getWantedDate(daysParser[String(gate.network_plan.ar_dep.departure_day)]).toLocaleDateString('el-GR');
-                    new_gm.innerHTML = `
-                <div class="gate-info">
-                    <div>
-                        <div class="gate-name">
-                            <h2>${gate.gate.Name}</h2>
+            for (flight of res) {
+                try {
+                    if ((new Date(flight.flight_arrival) < (new Date()) && (new Date(flight.flight_departure) > (new Date())))) {
+                        var departure = new Date(flight.flight_departure);
+                        var status = "S1/Check in";
+                        if ((departure.getTime() - (new Date()).getTime()) / (1000 * 60) < 30) {
+                            status = "S0/Boarding";
+                        }
+                        var new_gm = document.createElement('div');
+                        new_gm.classList = `grid-item gate-box gate-box${gate_used}`;
+                        gate_used += 1;
+                        gm_pending.appendChild(new_gm);
+                        var gate = flight.gate_dispatcher;
+                        departure
+                        new_gm.innerHTML = `
+                    <div class="gate-info">
+                        <div>
+                            <div class="gate-name">
+                                <h2>${gate.gate.Name}</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div></div>
-                    <div>
-                        <img class="gate-airline-logo" src=${gate.network_plan.airline.logoLink} alt="logo">
-                    </div>
-                    <div>
-                        <table style="width:100%">
-                            <tr>
-                                <td>
-                                    <div class="gate-info-label">Gate Terminal: </td>
-                                <td><strong>${gate.gate.Gate}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="gate-info-label">Gate Class: </td>
-                                <td><strong>${gate.gate.Class}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="gate-info-label">Aircraft Type: </td>
-                                <td><strong>${gate.network_plan.aircraft.Manufacturer +" "+ gate.network_plan.aircraft.Model}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="gate-info-label">Aircraft Registry: </td>
-                                <td><strong>${gate.network_plan.aircraft.Model.slice(0,4).toUpperCase()+gate_used}</strong></td>
-                            </tr>
-                        </table>
+                        <div></div>
+                        <div>
+                            <img class="gate-airline-logo" src=${gate.network_plan.airline.logoLink} alt="logo">
                         </div>
-                        <div><img class="gate-aircraft" src="https://i.ibb.co/s1Pd5gB/a320.png"></div>
                         <div>
                             <table style="width:100%">
                                 <tr>
                                     <td>
-                                        <div class="gate-info-label">Airline: </td>
-                                    <td><strong>${gate.network_plan.airline.name}</strong></td>
+                                        <div class="gate-info-label">Gate Terminal: </td>
+                                    <td><strong>${gate.gate.Gate}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="gate-info-label">Flight: </td>
-                                    <td><strong>${gate.flight_number}</strong></td>
+                                        <div class="gate-info-label">Gate Class: </td>
+                                    <td><strong>${gate.gate.Class}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="gate-info-label">To: </td>
-                                    <td><strong>${gate.network_plan.airport.name}</strong></td>
+                                        <div class="gate-info-label">Aircraft Type: </td>
+                                    <td><strong>${gate.network_plan.aircraft.Manufacturer +" "+ gate.network_plan.aircraft.Model}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="gate-info-label">Departure day: </td>
-                                    <td><strong>${wanted_date}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="gate-info-label">Departure time: </td>
-                                    <td><strong>${gate.network_plan.ar_dep.departure_time}</strong></td>
+                                        <div class="gate-info-label">Aircraft Registry: </td>
+                                    <td><strong>${gate.network_plan.aircraft.Model.slice(0,4).toUpperCase()+gate_used}</strong></td>
                                 </tr>
                             </table>
                             </div>
+                            <div><img class="gate-aircraft" src="https://i.ibb.co/s1Pd5gB/a320.png"></div>
                             <div>
-                                <div class="gate-services">
-                                    <div class="gate-police-box"><i class="fa fa-cab" style="font-size: 2em;"></i></div>
-                                    <div class="gate-fire-box"><i class="fa fa-free-code-camp" style="font-size: 1.8em;"></i></div>
-                                    <div class="gate-ambulance-box"><i class="fa fa-ambulance" style="font-size: 2em;"></i></div>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <div class="gate-info-label">Airline: </td>
+                                        <td><strong>${gate.network_plan.airline.name}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="gate-info-label">Flight: </td>
+                                        <td><strong>${gate.flight_number}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="gate-info-label">To: </td>
+                                        <td><strong>${gate.network_plan.airport.name}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="gate-info-label">Departure day: </td>
+                                        <td><strong>${("0" + departure.getDate()).slice(-2) + "/" + ("0" + (departure.getMonth() + 1)).slice(-2) + "/" + ("0" + departure.getYear()).slice(-2) + " " +days[departure.getDay()]}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="gate-info-label">Departure time: </td>
+                                        <td><strong>${("0" + departure.getHours()).slice(-2)+":"+("0" + departure.getMinutes()).slice(-2)}</strong></td>
+                                    </tr>
+                                </table>
                                 </div>
-                            </div>
-                            <div></div>
-                            <div><span class="badge badge-pill badge-warning" style="font-size: 1.4em;">Check-in</span></div>
-                            </div>`
-                }
+                                <div>
+                                    <div class="gate-services">
+                                        <div class="gate-police-box"><i class="fa fa-cab" style="font-size: 2em;"></i></div>
+                                        <div class="gate-fire-box"><i class="fa fa-free-code-camp" style="font-size: 1.8em;"></i></div>
+                                        <div class="gate-ambulance-box"><i class="fa fa-ambulance" style="font-size: 2em;"></i></div>
+                                    </div>
+                                </div>
+                                <div></div>
+                                <div><span class="badge badge-pill badge-warning ${status.split('/')[0]}" style="font-size: 1.4em;">${status.split('/')[1]}</span></div>
+                                </div>`
+                        document.querySelector('.gate-police-box').addEventListener('dblclick', (event) => {
+                            modal.style.display = 'block';
+                            document.getElementById('modalHeader').innerText = "Police Request";
+                            document.querySelector('.modal-header').style.backgroundColor = 'blue';
+                            document.getElementById('modalBody').innerText = "Police will be on their way as soon as possible.";
+                        })
+                        document.querySelector('.gate-fire-box').addEventListener('dblclick', (event) => {
+                            modal.style.display = 'block';
+                            document.getElementById('modalHeader').innerText = "Fire Department Request";
+                            document.querySelector('.modal-header').style.backgroundColor = 'red';
+                            document.getElementById('modalBody').innerText = "The fire department will be on its way as soon as possible.";
+                        })
+                        document.querySelector('.gate-ambulance-box').addEventListener('dblclick', (event) => {
+                            modal.style.display = 'block';
+                            document.getElementById('modalHeader').innerText = "Ambulance Request";
+                            document.querySelector('.modal-header').style.backgroundColor = 'yellow';
+                            document.getElementById('modalBody').innerText = "An ambulance will be on its way as soon as possible";
+                        })
+                    }
+
+                } catch (err) { console.log(err) }
+
             }
         })
         .catch(err => console.log(err));
-}
-
-function getWantedDate(wanted_days) { //Gets next closest day
-    const wanted_date = new Date(Date.now());
-    wanted_days = Math.abs(wanted_days - wanted_date.getDay())
-    wanted_date.setDate(wanted_date.getDate() + wanted_days);
-    return wanted_date
-}
-
-function getBackDate(wanted_days) { // Gets the closest date
-    const wanted_date = new Date(Date.now());
-    wanted_days = wanted_days - wanted_date.getDay()
-    wanted_date.setDate(wanted_date.getDate() + wanted_days);
-    return wanted_date
 }

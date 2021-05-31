@@ -134,7 +134,7 @@ function getRejectedData() {
 }
 
 function changeApprove(plan_id, action, prev_status) {
-    fetch(window.location.href + 'flight_applications', {
+    fetch(window.location.href, {
             method: 'PUT',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
             body: JSON.stringify({

@@ -33,9 +33,9 @@ function loadPlan() {
                     document.querySelector('.plan-status').id = approvedToString[data.approved]
                     document.querySelector('.skyvector-href').href = `https://skyvector.com/airport/${data.airport.icao}`;
                     document.querySelector('.skyvector-href').innerHTML = `${data.airport.name} - ${data.airport.iata}`;
-                    document.getElementById('aircraft').innerHTML += ` ${data.aircraft.Manufacturer + data.aircraft.Model}`;
-                    document.getElementById('departure').innerHTML = `${data.ar_dep.departure_day} ${data.ar_dep.departure_time}`;
-                    document.getElementById('arrival').innerHTML = `${data.ar_dep.arrival_day} ${data.ar_dep.arrival_time}`;
+                    document.getElementById('aircraft').innerHTML += ` ${data.aircraft.Manufacturer +" "+ data.aircraft.Model}`;
+                    document.getElementById('departure').innerHTML = `Every ${data.ar_dep.departure_day} at ${data.ar_dep.departure_time}`;
+                    document.getElementById('arrival').innerHTML = `Every ${data.ar_dep.arrival_day} at ${data.ar_dep.arrival_time}`;
                     createMap(data.airport.name, data.airport.dd_latitude, data.airport.dd_longitude)
                         //for (i of application) i.style.display = "block"
                     res()
@@ -46,43 +46,6 @@ function loadPlan() {
         })
         .catch((err) => console.log(err))
 }
-
-// function loadCanvas() {
-//     var canvas = document.createElement('canvas'),
-//         div = document.getElementById('world_map');
-//     canvas.id = "world_map_canvas";
-//     canvas.width = 1000;
-//     canvas.height = 768;
-//     canvas.style.zIndex = 8;
-//     canvas.style.position = "absolute";
-//     div.appendChild(canvas);
-// }
-
-// function drawLine(fromIndex, toIndex) {
-//     const canvas = document.querySelector('#world_map_canvas');
-//     var value = $('circle.jvectormap-marker').data("index");
-//     var obj = eval('(' + value + ')');
-//     console.log(value)
-//     var fromMarker = $('circle.jvectormap-marker')[0].position();
-//     var toMarker = $('circle.jvectormap-marker')[1].position();
-//     console.log(fromMarker)
-
-//     if (!canvas.getContext) {
-//         return;
-//     }
-//     const ctx = canvas.getContext('2d');
-
-//     // set line stroke and line width
-//     ctx.strokeStyle = 'red';
-//     ctx.lineWidth = 1;
-
-//     // draw a red line
-//     ctx.beginPath();
-//     ctx.moveTo(fromMarker.x, fromMarker.y);
-//     ctx.lineTo(toMarker.x, toMarker.y);
-//     ctx.stroke();
-
-// }
 
 function createMap(name, latitude, longitude) {
     //loadCanvas();

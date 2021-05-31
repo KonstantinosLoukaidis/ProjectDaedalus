@@ -40,7 +40,7 @@ document.querySelectorAll('.airport').forEach((item) => {
                         document.getElementById("airport_name").value = res[0].name;
                     }
                 })
-                .catch(err => document.getElementById("airport_name").value = "Couldn't find such aiport");
+                .catch(err => document.getElementById("airport_name").value = "Couldn't find such airport");
 
         }
     });

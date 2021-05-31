@@ -280,7 +280,7 @@ function allocateFlight(gatedispatchedId, planId) {
                     expected_departure: null,
                     passed: false
                 }
-                let promise = new Promise((res, rej) => {
+                new Promise((res, rej) => {
                     let tempObj1 = calculateLandingCharges(data.aircraft.MTOW, data.ar_dep)
                     dataToSend.landing_charge = (tempObj1.landingCharges).toFixed(2);
                     dataToSend.landing_surcharges = tempObj1.surcharges;
@@ -300,13 +300,13 @@ function allocateFlight(gatedispatchedId, planId) {
                     let etz = expdate.getTimezoneOffset() * 60000;
                     dataToSend.flight_arrival = (new Date(ardate - atz)).toISOString()
                     let depdate = getNextDate(ardate, daysParser[String(data.ar_dep.departure_day)]);
-                    let expddate = new Date(dep.getTime() + delay_generator(2) * 60000)
+                    let expddate = new Date(depdate.getTime() + delay_generator(2) * 60000);
                     let edtz = expddate.getTimezoneOffset() * 60000;
                     depdate.setHours(deptimes[0], deptimes[1], 0)
                     let dtz = depdate.getTimezoneOffset() * 60000;
-                    dataToSend.flight_departure = (new Date(depdate - dtz)).toISOString()
-                    dataToSend.expected_departure = (new Date(expddate - edtz)).toISOString()
-                    dataToSend.expected_arrival = (new Date(expdate - etz)).toISOString()
+                    dataToSend.flight_departure = (new Date(depdate - dtz)).toISOString();
+                    dataToSend.expected_departure = (new Date(expddate - edtz)).toISOString();
+                    dataToSend.expected_arrival = (new Date(expdate - etz)).toISOString();
                     let newFlight = new Flight(dataToSend)
                     newFlight.save((err) => {
                         if (err) throw err;
@@ -330,7 +330,6 @@ function removeFlight(gateDispatcherId) {
 }
 
 function calculateLandingCharges(MTOW, ar_dep) {
-    console.log(MTOW)
     let wanted_date = getWantedDate(daysParser[String(ar_dep.arrival_day)]);
     let ar_time = ar_dep.arrival_time
     let landingChargeBeforeSurcharges = 0;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">
+
+    <link rel="shortcut icon" href="/img/icons/icon-48x48.png" />
+
+    <title>Flight Application | Project Daedalus</title>
+
+    <link href="/css/app-webkit.css" rel="stylesheet">
+    <link href="/css/loader.css" rel="stylesheet">
+    <link href="/css/flight_profile.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        {{> sidebar}}
+        <div class="main">
+            {{> sidebar-toggle}}
+            <main class="content">
+                <div class="container-fluid p-0">
+                    <div class="for-loader"></div>
+                    <h1 class="h3 mb-3 application-title">Network Planning Application | ID: </h1>
+                    <div class="row">
+                        <div class="col-md-4 col-xl-3 application">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Airline Details</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <img class="img-fluid mb-2" id="airline-logo" width="400" />
+                                    <h5 class="card-title mb-0" id="airline-name"></h5>
+                                    <div class="text-muted mb-2" id="airline-iata">IATA: | ICAO: </div>
+
+                                    <div>
+                                        <a class="btn btn-primary btn-sm plan-status"></a>
+                                    </div>
+                                </div>
+                                <hr class="my-0" />
+                                <div class="card-body">
+                                    <h5 class="h6 card-title">Flight Details</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> From/To: <a href="https://skyvector.com/airport/LGAV">Athens International Airport - LGAV, GR</a></li>
+                                        <li class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> From/To:
+                                            <a class="skyvector-href" target="_blank"></a>
+                                        </li>
+                                        <li class="mb-1" id="aircraft"><span data-feather="send" class="feather-sm mr-1"></span> Aircraft:</li>
+                                    </ul>
+                                </div>
+                                <hr class="my-0" />
+                                <div class="card-body">
+                                    <h5 class="h6 card-title">Schedule</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <strong>Departure from LGAV:</strong>
+                                        <li class="mb-1" id="departure"></li>
+                                    </ul>
+                                    <br>
+                                    <ul class="list-unstyled mb-0">
+                                        <strong>Arrival at LGAV:</strong>
+                                        <li class="mb-1" id="arrival"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-xl-9 application">
+                            <div class="card flex-fill w-100">
+                                <div class="card-header">
+
+                                    <h5 class="card-title mb-0">Real-Time</h5>
+                                </div>
+                                <div class="card-body px-4">
+                                    <div id="world_map" style="height:600px;"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- <script src="js/vendor.js"></script> -->
+    <script src="/js/app-webkit.js"></script>
+    <script src="/js/flight_profile.js"></script>
+
+</body>
+
+</html>

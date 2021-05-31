@@ -1,57 +1,68 @@
-<nav id="sidebar" class="sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="/">
-                    <span class="align-middle">Project Daedalus</span>
-                </a>
+<head>
+    <script type="text/javascript" src="/functions_js/logout.js"></script>
+</head>
+<body>
+    <nav id="sidebar" class="sidebar">
+                <div class="sidebar-content js-simplebar">
+                    <a class="sidebar-brand" href="/">
+                        <span class="align-middle">Project Daedalus</span>
+                    </a>
 
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Features
-                    </li>
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-header">
+                            Features
+                        </li>
 
-                    <li class="sidebar-item amain">
-                        <a class="sidebar-link" href="/admin-logged">
-                            <i class="align-middle" data-feather="menu"></i> <span class="align-middle">Admin menu</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item amain">
+                            <a class="sidebar-link" href="/admin-logged">
+                                <i class="align-middle" data-feather="menu"></i> <span class="align-middle">Admin menu</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item agm">
-                        <a class="sidebar-link" href="/admin-logged/gate_management">
-                            <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Gate management</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item afa">
-                        <a class="sidebar-link" href="/admin-logged/flight_applications">
-                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Flight applications</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item agm">
+                            <a class="sidebar-link" href="/admin-logged/gate_management">
+                                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Gate management</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item afa">
+                            <a class="sidebar-link" href="/admin-logged/flight_applications">
+                                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Flight applications</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item aa">
-                        <a class="sidebar-link" href="/admin-logged/analytics">
-                            <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Analytics</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item aa">
+                            <a class="sidebar-link" href="/admin-logged/analytics">
+                                <i class="align-middle" data-feather="pie-chart"></i> <span class="align-middle">Analytics</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item aft">
-                        <a class="sidebar-link" href="/admin-logged/flight_table">
-                            <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tables</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item aft">
+                            <a class="sidebar-link" href="/admin-logged/flight_table">
+                                <i class="align-middle" data-feather="send"></i> <span class="align-middle">Tables</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="/network_planning">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Network Plan Form</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item rdr">
+                            <a class="sidebar-link" href="/admin-logged/radar">
+                                <i class="align-middle" data-feather="map-pin"></i> <span class="align-middle">Radar</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-header">
-                        Admin account
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" onclick="/functions_js/logoutUser()">
-                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/network_planning">
+                                <i class="align-middle" data-feather="book"></i> <span class="align-middle">Network Plan Form</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-header">
+                            Admin account
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" onclick="logoutUser()">
+                                <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    </body>
