@@ -1,6 +1,7 @@
 var id
 const forLoader = document.querySelector('.for-loader');
 const application = document.querySelectorAll('.application');
+const actions = document.getElementById('actions')
 document.addEventListener('DOMContentLoaded', () => {
     id = window.location.href.split('/').slice(-1)[0];
     var loader = document.createElement('div');
@@ -36,6 +37,8 @@ function loadPlan() {
                     document.getElementById('aircraft').innerHTML += ` ${data.aircraft.Manufacturer +" "+ data.aircraft.Model}`;
                     document.getElementById('departure').innerHTML = `Every ${data.ar_dep.departure_day} at ${data.ar_dep.departure_time}`;
                     document.getElementById('arrival').innerHTML = `Every ${data.ar_dep.arrival_day} at ${data.ar_dep.arrival_time}`;
+                    createActions(data._id, data.approved)
+                    feather.replace();
                     createMap(data.airport.name, data.airport.dd_latitude, data.airport.dd_longitude)
                         //for (i of application) i.style.display = "block"
                     res()
@@ -45,6 +48,32 @@ function loadPlan() {
                 })
         })
         .catch((err) => console.log(err))
+}
+
+function createActions(id, status) {
+    if (status == "0") {
+        let acceptAction = document.createElement('li');
+        let rejectAction = document.createElement('li');
+        acceptAction.innerHTML = `<li><a><i class="align-middle accept-plan" data-toggle="tooltip" data-placement="left" title data-original-title="Accept" data-feather="check-circle"></i>  Accept plan</a></li>
+        <br>`
+        rejectAction.innerHTML = `<li><a><i class="align-middle reject-plan" data-toggle="tooltip" data-placement="right" title data-original-title="Reject" data-feather="x"></i>  Reject plan</a></li>`
+        acceptAction.addEventListener('click', (event) => {
+            changeApprove(id, 1, 0); // 1 === accept
+        });
+        rejectAction.addEventListener('click', (event) => {
+            console.log("reject")
+            changeApprove(id, -1, 0); // -1 === reject
+        });
+        actions.appendChild(acceptAction);
+        actions.appendChild(rejectAction);
+    } else {
+        let pendingAction = document.createElement('div');
+        pendingAction.innerHTML = `<li><a><i class="align-middle pending-plan" data-toggle="tooltip" data-placement="top" title data-original-title="Pending" data-feather="clock"></i>  Send plan to pending</a></li>`
+        pendingAction.addEventListener('click', (event) => {
+            changeApprove(id, 0, Number(status));
+        });
+        actions.appendChild(pendingAction);
+    }
 }
 
 function createMap(name, latitude, longitude) {
@@ -91,3 +120,23 @@ function createMap(name, latitude, longitude) {
         $(window).trigger('resize');
     }, 250)
 };
+
+function changeApprove(plan_id, action, prev_status) {
+    fetch('/admin-logged/flight_applications', {
+            method: 'PUT',
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+            body: JSON.stringify({
+                plan_id: plan_id,
+                action: action,
+                prev_status: prev_status
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.data == 'error') alert(data.msg)
+            else window.location.reload();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}

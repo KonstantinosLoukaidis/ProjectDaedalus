@@ -45,7 +45,7 @@
                                     <div class="bar2">
                                         <p style="text-align: center; font-size: 6em; color:#fff; margin-top: 2em;">Welcome Admin</p>
                                         <div style="text-align: center"><img src="https://aceofgreece.files.wordpress.com/2013/02/athens_international_airport_eleftherios_venizelos3.jpg"></div>
-                                        <p style="text-align: center; font-size: 4.5em; color:#fff;">Friday May 14 2021, 23:30</p>
+                                        <p style="text-align: center; font-size: 4.5em; color:#fff;"><span id="adminTime"></span></p>
                                         <div style="text-align: center"><img src="https://i.ibb.co/2ch3cVT/Screenshot-2.jpg"></div>
                                         <br>
                                         <div class="mb-3" style="text-align: center;">
@@ -78,6 +78,11 @@
     <script src="/js/app-webkit.js"></script>
     <script>
         document.querySelector('.amain').classList+=" active"
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var today = new Date();
+        document.getElementById('adminTime').innerText = `${days[today.getDay()]} ${months[today.getMonth()]} ${today.getDate()} ${"20"+("0" + today.getYear()).slice(-2)}, ${today.toLocaleTimeString()}`
+
     </script>
 
 </body>

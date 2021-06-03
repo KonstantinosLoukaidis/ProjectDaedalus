@@ -29,6 +29,7 @@ const adminHelloRouter = require('./routes/adminHelloRouter');
 const flight_tableRouter = require('./routes/flight_tableRouter');
 const analyticsRouter = require('./routes/analyticsRouter');
 const radarRouter = require('./routes/radarRouter');
+const aboutusRouter = require('./routes/aboutusRouter');
 
 const connect = mongoose.connect(config.mongoUrl);
 connect.then((db) => {
@@ -65,7 +66,8 @@ app.use(flash());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/network_planning', network_planningRouter);
-app.use('/flight_table', flight_tableRouter);
+app.use('/aboutus', aboutusRouter);
+//app.use('/flight_table', flight_tableRouter);
 
 function auth(req, res, next) {
     if (!req.user) {
@@ -99,7 +101,7 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.render('error', err);
 });
 
 module.exports = app;
