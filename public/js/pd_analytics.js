@@ -1,7 +1,7 @@
 var analyticsData = new Array()
 var index = [];
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var tableData = [];
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const forLoader = document.querySelector('.forLoader');
 document.querySelector('.aa').classList += " active"
 
@@ -33,24 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch(window.location.href + '/getConnectedAirports')
                 .then((req) => req.json())
                 .then((res) => {
-                    var connectedAirports = [];
-                    for (data of res) {
-                        if (data.gate_dispatcher.network_plan != null) {
-                            if (!connectedAirports.includes(data.gate_dispatcher.network_plan.airport)) {
-                                connectedAirports.push(data.gate_dispatcher.network_plan.airport)
-                            }
-                        } else console.log(data)
-                    }
-                    for (data of res.slice(0, 6)) tableData.push(data)
-                    resolve(connectedAirports)
+                    resolve(res)
                 })
                 .catch((err) => console.log(err))
         })
         .then((res) => {
-            PaymentTable();
+            AirportsWorldWide(res);
+        })
+    new Promise((resolve, rej) => {
+            fetch(window.location.href + '/getPaymentTable')
+                .then((req) => req.json())
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((err) => console.log(err))
+        })
+        .then((res) => {
+            PaymentTable(res)
             forLoader.remove()
             document.querySelector('.mainContent').style.display = 'block';
-            AirportsWorldWide(res);
+
         })
 })
 
@@ -278,28 +280,36 @@ function Calendar() {
     });
 };
 
-function PaymentTable() {
+function PaymentTable(tableData) {
     const table = document.querySelector('.paymentTable');
     var id = 0;
-    for (data of tableData) {
-        var new_tr = document.createElement('tr');
-        new_tr.id = id++;
-        var status = checkPayment(data.passed).split('/');
-        var paymentstart = new Date(data.flight_arrival);
-        var paymentend = new Date(data.flight_arrival);
-        paymentend.setDate(paymentend.getDate() + 15)
-        new_tr.innerHTML = `
-        <td>${data.gate_dispatcher.flight_number}</td>
-        <td>${data.gate_dispatcher.network_plan.airline.name}</td>
-        <td class="d-none d-xl-table-cell">${("0" + paymentstart.getDate()).slice(-2)+"/"+("0" + (paymentstart.getMonth()+1)).slice(-2)+"/"+"20"+("0" + paymentstart.getYear()).slice(-2)}</td>
-        <td class="d-none d-xl-table-cell">${("0" + paymentend.getDate()).slice(-2)+"/"+("0" + (paymentend.getMonth()+1)).slice(-2)+"/"+"20"+("0" + paymentend.getYear()).slice(-2)}</td>
-        <td><span class="badge badge-success ${status[0]}">${status[1]}</span></td>
-        <td class="d-none d-md-table-cell">${beautifyNum(data.total_ammount,true)} €</td>
-        `
-        new_tr.addEventListener('dblclick', (event) => {
-            window.location.replace(window.location.href + `/${tableData[event.target.parentElement.id]._id}`)
-        })
-        table.appendChild(new_tr)
+    var today = new Date()
+    document.getElementById('payment_day').innerHTML = `${days[today.getDay()]} ${months[today.getMonth()]} ${today.getDate()} ${"20"+("0" + today.getYear()).slice(-2)}`
+    if (tableData.length == 0) {
+        var null_msg = document.createElement('h1');
+        null_msg.innerText = 'No flights today';
+        document.querySelector('.payment_title').appendChild(null_msg)
+    } else {
+        for (data of tableData) {
+            var new_tr = document.createElement('tr');
+            new_tr.id = id++;
+            var status = checkPayment(data.passed).split('/');
+            var paymentstart = new Date(data.flight_arrival);
+            var paymentend = new Date(data.flight_arrival);
+            paymentend.setDate(paymentend.getDate() + 15)
+            new_tr.innerHTML = `
+            <td>${data.gate_dispatcher.flight_number}</td>
+            <td>${data.gate_dispatcher.network_plan.airline.name}</td>
+            <td class="d-none d-xl-table-cell">${("0" + paymentstart.getDate()).slice(-2)+"/"+("0" + (paymentstart.getMonth()+1)).slice(-2)+"/"+"20"+("0" + paymentstart.getYear()).slice(-2)}</td>
+            <td class="d-none d-xl-table-cell">${("0" + paymentend.getDate()).slice(-2)+"/"+("0" + (paymentend.getMonth()+1)).slice(-2)+"/"+"20"+("0" + paymentend.getYear()).slice(-2)}</td>
+            <td><span class="badge badge-success ${status[0]}">${status[1]}</span></td>
+            <td class="d-none d-md-table-cell">${beautifyNum(data.total_ammount,true)} €</td>
+            `
+            new_tr.addEventListener('dblclick', (event) => {
+                window.location.replace(window.location.href + `/${tableData[event.target.parentElement.id]._id}`)
+            })
+            table.appendChild(new_tr)
+        }
     }
 }
 

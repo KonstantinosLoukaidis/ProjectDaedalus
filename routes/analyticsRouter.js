@@ -15,6 +15,7 @@ const GateDispatcher = require('../models/gateDispatcher');
 const Gates = require('../models/gates');
 const Flight = require('../models/flight');
 const { data } = require('jquery');
+const { connected } = require('process');
 
 analyticsRouter.use(bodyParser.json());
 
@@ -63,6 +64,40 @@ analyticsRouter.route('/getConnectedAirports')
                     }
                 }
             })
+            .exec((err, data) => {
+                if (err) throw err;
+                let connectedAirports = [];
+                for (flight of data) {
+                    if (!connectedAirports.includes(flight.gate_dispatcher.network_plan.airport)) {
+                        connectedAirports.push(flight.gate_dispatcher.network_plan.airport)
+                    }
+                }
+                res.send(connectedAirports)
+            })
+    })
+
+analyticsRouter.route('/getPaymentTable')
+    .get((req, res, next) => {
+        let lowerbound = new Date()
+        let upperbound = new Date()
+        upperbound.setHours(23, 59, 59, 999)
+        lowerbound.setHours(0, 0, 0, 0)
+        let tz = (new Date()).getTimezoneOffset() * 60000;
+        upperbound = (new Date(upperbound - tz)).toISOString()
+        lowerbound = (new Date(lowerbound - tz)).toISOString()
+        Flight.find({
+                'flight_arrival': { "$gte": lowerbound, "$lt": upperbound }
+            })
+            .populate("gate_dispatcher")
+            .populate({
+                path: 'gate_dispatcher',
+                populate: {
+                    path: 'network_plan',
+                    populate: {
+                        path: 'airport'
+                    }
+                }
+            })
             .populate({
                 path: 'gate_dispatcher',
                 populate: {
@@ -74,6 +109,7 @@ analyticsRouter.route('/getConnectedAirports')
             })
             .exec((err, data) => {
                 if (err) throw err;
+                else if (!data) res.send(null)
                 res.send(data)
             })
     })

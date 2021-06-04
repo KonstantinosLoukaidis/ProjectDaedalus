@@ -1,4 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet'>
+<title>About us | Project Daedalus</title>
+<style>
+body {
+    font-family: 'Work Sans';
+    font-size: 22px;
+    margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #0C2464;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
 {{> topnav}}
+<div class="about-section">
+  <h1>About Us</h1>
+  <p>We are a team of creative dreamers.</p>
+  <p>“Intelligence without ambition is a bird without wings.” —Salvador Dalí</p>
+</div>
+
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="https://i.ibb.co/XXnbfgp/33489280-1301701543296719-2116517015400218624-n.jpg" alt="Kostas" style="width:100%">
+      <div class="container">
+        <h2>Konstantinos Loukaidis</h2>
+        <p class="title">Lead Back-End Dev Ops</p>
+        <p>Interests on Python, Node.JS, JavaScript, MongoDB</p>
+        <p>up1059320@upnet.gr</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="https://i.ibb.co/mbCLy4b/1622797652535.jpg" alt="Georges" style="width:100%">
+      <div class="container">
+        <h2>Georges Verouchis</h2>
+        <p class="title">Lead Front-End Dev Ops</p>
+        <li>Electrical Computer Engineer</li>
+        <li>Specialization in Applied Data Science with Python, University of Michigan</li>
+        <li>Currently working on: Diploma Thesis: Sentiment Analysis on topics concerning Greek public opinion.</li>
+        <li>Tutor at Algorithmics Greece.</li>
+        <p>up1059290@upnet.gr</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+</body>
+</html>
+
 <script>
     document.getElementById('about').classList = ' active'
 </script>
