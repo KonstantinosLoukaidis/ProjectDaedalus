@@ -403,15 +403,16 @@ function generateFlightNumber(IATA, id) {
 
 function WeeksInDueDate(duedate, days) {
     duedate = new Date(duedate)
-    let dates = new Array()
+    let wantedDates = []
     let b = new Date()
     if (getWantedDate(days).getDate() == b.getDate()) days += 7
     while (getWantedDate(days) < duedate) {
         b = getWantedDate(days)
-        dates.push(b)
+        wantedDates.push(b)
         days += 7
     }
-    return dates
+    wantedDates.shift()
+    return wantedDates
 }
 
 

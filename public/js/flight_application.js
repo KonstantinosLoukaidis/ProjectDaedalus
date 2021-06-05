@@ -108,6 +108,7 @@ function getRejectedData() {
                 let rejectedPlan = document.createElement('tr');
                 rejectedPlan.style.backgroundColor = colour;
                 rejectedTable.appendChild(rejectedPlan);
+                console.log(rejected_plan)
                 rejectedPlan.innerHTML = `
                     <td>
                         <img src="${rejected_plan.airline.logoLink}" width="96" alt=${rejected_plan.airline.name}> ${rejected_plan.airline.name}

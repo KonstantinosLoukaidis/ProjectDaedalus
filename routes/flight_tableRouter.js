@@ -81,6 +81,7 @@ flight_tableRouter.route('/getArrivals')
                     path: 'gate'
                 }
             })
+            .sort('flight_arrival')
             .exec((err, data) => {
                 res.send(data)
             })
@@ -121,6 +122,7 @@ flight_tableRouter.route('/getDepartures')
                     path: 'gate'
                 }
             })
+            .sort('flight_departure')
             .exec((err, data) => {
                 if (!data) res.send(null)
                 res.send(data)

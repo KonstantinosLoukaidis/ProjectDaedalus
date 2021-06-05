@@ -88,11 +88,13 @@ html {
 <div class="row">
   <div class="column">
     <div class="card">
-      <img src="https://i.ibb.co/XXnbfgp/33489280-1301701543296719-2116517015400218624-n.jpg" alt="Kostas" style="width:100%">
-      <div class="container">
+      <a id="rickroll" target="_blank"><img id="plug" src="https://i.ibb.co/XXnbfgp/33489280-1301701543296719-2116517015400218624-n.jpg" alt="Kostas" style="width:100%"></a>
+      <div class="container redacted">
         <h2>Konstantinos Loukaidis</h2>
         <p class="title">Lead Back-End Dev Ops</p>
-        <p>Interests on Python, Node.JS, JavaScript, MongoDB</p>
+        <li>Electrical Computer Engineer</li>
+        <li>Interests on Python, Node.JS, JavaScript, MongoDB</li>
+        <li>Diploma Thesis: AR application to support Pharmacies</li>
         <p>up1059320@upnet.gr</p>
         <p><button class="button">Contact</button></p>
       </div>
@@ -121,5 +123,13 @@ html {
 </html>
 
 <script>
-    document.getElementById('about').classList = ' active'
+    document.getElementById('about').classList = ' active';
+    setTimeout(()=>{
+      // const redacted = document.querySelector('.redacted')
+	    //for(var child=redacted.firstChild; child!==null; child=child.nextSibling) {
+      //  child.innerText = `[REDACTED]`
+      //}
+      const rickroll = document.getElementById('rickroll');
+      rickroll.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },12000)
 </script>
