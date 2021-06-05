@@ -86,7 +86,7 @@ analyticsRouter.route('/getPaymentTable')
         upperbound = (new Date(upperbound - tz)).toISOString()
         lowerbound = (new Date(lowerbound - tz)).toISOString()
         Flight.find({
-                'flight_arrival': { "$gte": lowerbound, "$lt": upperbound }
+                'flight_arrival': { "$gte": lowerbound }
             })
             .populate("gate_dispatcher")
             .populate({

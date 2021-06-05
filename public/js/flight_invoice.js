@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             var timeDiffinHours = Math.ceil((dep_date.getTime() - arr_date.getTime()) / (1000 * 60 * 60))
             var MTOW = aircraft.MTOW.split(',').slice(0, 2).join('.')
             document.getElementById('airline-name').innerText = airline.name;
-            document.getElementById('total-ammount').innerText = data.total_ammount + "€"
-            document.getElementById('total-ammount2').innerText = data.total_ammount + "€"
+            document.getElementById('total-ammount').innerText = beautifyNum(data.total_ammount, true) + "€"
+            document.getElementById('total-ammount2').innerText = beautifyNum(data.total_ammount, true) + "€"
             document.getElementById('payment-date').innerText = arr_date.toLocaleString()
             document.getElementById('inv_num').innerText = generateInvNo(data._id)
             document.querySelector('.client').innerHTML = `
@@ -32,20 +32,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('departure-date1').innerText = dep_date.toLocaleString();
             document.getElementById('airport-iaco1').innerText = airport.icao;
             document.getElementById('airbus_passengers1').innerHTML = `${aircraft.Manufacturer+" "+aircraft.Model} aircraft carrying ${data.passengers} passengers`
-            document.getElementById('raw_mtow').innerText = MTOW + " tons"
-            document.getElementById('landing_charge').innerText = data.landing_charge + " €"
+            document.getElementById('raw_mtow').innerText = beautifyNum(Number(MTOW), true) + " tons"
+            document.getElementById('landing_charge').innerText = beautifyNum(data.landing_charge, true) + " €"
             document.querySelector(".mtowmsg").innerHTML = getMTOWMsg(Number(MTOW))
             document.getElementById('hours_parking').innerText = timeDiffinHours + " hrs"
-            document.getElementById('parking_charge').innerText = data.parking_charge + " €"
+            document.getElementById('parking_charge').innerText = beautifyNum(data.parking_charge, true) + " €"
             document.querySelector(".mtowmsg2").innerHTML = getTimeMTOWMsg(Number(MTOW))
             document.getElementById('total_passengers').innerText = data.passengers + " passengers";
-            document.getElementById('prm_charges').innerText = data.passengers_charges + " €";
+            document.getElementById('prm_charges').innerText = beautifyNum(data.passengers_charges, true) + " €";
             document.getElementById('landing_surcharges').innerText = surcharges(data.landing_surcharges);
             document.getElementById('parking_surcharges').innerText = surcharges(data.parking_surcharges);
             forLoader.removeChild(loader)
             document.querySelector('.invoiceCard').style.display = "block"
         })
 })
+
+function beautifyNum(num, dec) {
+    num = String(num.toFixed(2))
+    total = num.split('.')
+    num = total[0]
+    var newnum = ""
+    for (var i = num.length - 3; i > 0; i = i - 3) {
+        newnum = "," + num.slice(i, i + 3) + newnum
+    }
+    newnum = num.slice(0, Math.abs(3 + i)) + newnum
+    if (dec) return newnum + "." + total[1].slice(0, 2)
+    else return newnum
+}
 
 function surcharges(sur) {
     if (sur > 0) return "+" + sur * 100 + "%"
@@ -56,23 +69,23 @@ function surcharges(sur) {
 function getMTOWMsg(MTOW) {
     let mtowmsg = [];
     if (MTOW <= 10) mtowmsg = ["W≤10", 11.5, ""]
-    else if (MTOW > 10 && MTOW <= 25) mtowmsg = ["10&lt;W≤25", "11,50", "25 tons and 1.1455"]
-    else if (MTOW > 25 && MTOW <= 50) mtowmsg = ["25&lt;W≤50", "28,67", "25 tons and 1,438"]
-    else if (MTOW > 50 && MTOW <= 65) mtowmsg = ["50&lt;W≤65", "64,62", "50 tons and 1,6141"]
-    else if (MTOW > 65 && MTOW <= 80) mtowmsg = ["65&lt;W≤80", "88,83", "65 tons and 1,6434"]
-    else if (MTOW > 80 && MTOW <= 150) mtowmsg = ["80&lt;W≤150", "113,48", "80 tons and 1,6141"]
-    else if (MTOW > 150 && MTOW <= 300) mtowmsg = ["150&lt;W≤300", "226,47", "150 tons and 1,6434"]
-    else mtowmsg = ["W&gt;300", "472,99", "300 tons and  1,2913"]
+    else if (MTOW > 10 && MTOW <= 25) mtowmsg = ["10&lt;W≤25", "11.50", "25 tons and 1.1455"]
+    else if (MTOW > 25 && MTOW <= 50) mtowmsg = ["25&lt;W≤50", "28.67", "25 tons and 1,438"]
+    else if (MTOW > 50 && MTOW <= 65) mtowmsg = ["50&lt;W≤65", "64.62", "50 tons and 1,6141"]
+    else if (MTOW > 65 && MTOW <= 80) mtowmsg = ["65&lt;W≤80", "88.83", "65 tons and 1,6434"]
+    else if (MTOW > 80 && MTOW <= 150) mtowmsg = ["80&lt;W≤150", "113.48", "80 tons and 1,6141"]
+    else if (MTOW > 150 && MTOW <= 300) mtowmsg = ["150&lt;W≤300", "226.47", "150 tons and 1,6434"]
+    else mtowmsg = ["W&gt;300", "472.99", "300 tons and  1.2913"]
     return `M.T.O.W. (tons) ${mtowmsg[0]}<br>Charges (Eur.) ${mtowmsg[1]}<br>For the first ${mtowmsg[2]}€ per additional ton or fraction thereof`
 }
 
 function getTimeMTOWMsg(MTOW) {
     let parkingmsg = [];
-    if (MTOW <= 10) parkingmsg = ["10&lt;W", "", "0,0344"]
-    else if (MTOW > 10 && MTOW <= 50) parkingmsg = ["10&lt;W≤50", "W x T x", "0,0275"]
-    else if (MTOW > 50 && MTOW <= 100) parkingmsg = ["50&lt;W≤100", "W x T x", "0,0344"]
-    else if (MTOW > 100 && MTOW <= 200) parkingmsg = ["100&lt;W≤200", "W x T x", "0,0412"]
-    else parkingmsg = ["&gt;200", "W x T x", "0,0481"]
+    if (MTOW <= 10) parkingmsg = ["10&lt;W", "", "0.0344"]
+    else if (MTOW > 10 && MTOW <= 50) parkingmsg = ["10&lt;W≤50", "W x T x", "0.0275"]
+    else if (MTOW > 50 && MTOW <= 100) parkingmsg = ["50&lt;W≤100", "W x T x", "0.0344"]
+    else if (MTOW > 100 && MTOW <= 200) parkingmsg = ["100&lt;W≤200", "W x T x", "0.0412"]
+    else parkingmsg = ["&gt;200", "W x T x", "0.0481"]
     return `M.T.O.W. (tons) ${parkingmsg[0]}<br>Charges (Eur.) ${parkingmsg[1]} ${parkingmsg[2]}€ per hour of layover`
 }
 
