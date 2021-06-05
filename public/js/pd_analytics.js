@@ -138,7 +138,7 @@ function MonthlyEarningsChart() {
                 }],
                 yAxes: [{
                     ticks: {
-                        stepSize: 10000
+                        stepSize: 100000
                     },
                     display: true,
                     borderDash: [3, 3],
@@ -188,7 +188,7 @@ function PieChart() {
 function BarChart() {
     // Bar chart
     var data = new Array();
-    for (i = 1; i < 13; i++) data.push(beautifyNum(analyticsData[0][index[i]].passengers, false))
+    for (i = 1; i < 13; i++) data.push(analyticsData[0][index[i]].passengers)
     new Chart(document.getElementById("chartjs-dashboard-bar"), {
         type: 'bar',
         data: {
@@ -214,9 +214,9 @@ function BarChart() {
                     gridLines: {
                         display: false
                     },
-                    stacked: false,
+                    stacked: true,
                     ticks: {
-                        stepSize: 50
+                        stepSize: 100
                     }
                 }],
                 xAxes: [{
