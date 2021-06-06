@@ -411,7 +411,7 @@ function WeeksInDueDate(duedate, days) {
         wantedDates.push(b)
         days += 7
     }
-    wantedDates.shift()
+    if (wantedDates[0] == wantedDates[1]) wantedDates.shift()
     return wantedDates
 }
 
